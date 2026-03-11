@@ -554,7 +554,169 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
   88%,100%{opacity:.15;color:var(--muted);}
 }
 
-/* ─── ABOUT STRIP ─────────────────────────── */
+/* ─── GAME SYSTEM ─────────────────────────── */
+.nav-token-badge{display:flex;align-items:center;gap:6px;background:rgba(200,146,42,.12);border:1px solid rgba(200,146,42,.3);color:var(--gold2);font-family:'DM Mono',monospace;font-size:11px;font-weight:400;padding:6px 12px;cursor:pointer;transition:background .2s;letter-spacing:.08em;}
+.nav-token-badge:hover{background:rgba(200,146,42,.22);}
+
+/* ── EXPLORE PAGE ── */
+.exp-page{padding:100px 0 80px;min-height:100vh;}
+.exp-hero{text-align:center;padding:0 24px 60px;}
+.exp-hero .sec-lbl{justify-content:center;}
+
+/* Token HUD */
+.token-hud{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin:32px auto 0;max-width:700px;}
+.hud-card{background:var(--surf);border:1px solid var(--bdr2);padding:16px 24px;display:flex;align-items:center;gap:12px;min-width:140px;}
+.hud-icon{font-size:22px;}
+.hud-info{}
+.hud-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--cream);line-height:1;}
+.hud-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.hud-btn{background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:8px 16px;border:none;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.hud-btn:hover{background:var(--gold2);}
+
+/* Daily quest bar */
+.quest-bar{background:var(--surf);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:12px 48px;display:flex;align-items:center;gap:20px;overflow-x:auto;margin-bottom:56px;}
+.quest-item{display:flex;align-items:center;gap:10px;flex-shrink:0;padding:8px 16px;border:1px solid var(--bdr);background:var(--bg);cursor:pointer;transition:border-color .2s;position:relative;}
+.quest-item.done{border-color:var(--sage);opacity:.6;}
+.quest-item:hover:not(.done){border-color:var(--gold);}
+.qi-icon{font-size:16px;}
+.qi-text{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream2);}
+.qi-reward{font-family:'DM Mono',monospace;font-size:8px;color:var(--gold);margin-top:2px;}
+.qi-check{position:absolute;top:4px;right:6px;font-size:10px;color:var(--sage);}
+
+/* Continent tabs */
+.continent-nav{display:flex;gap:0;border-bottom:1px solid var(--bdr);padding:0 48px;overflow-x:auto;}
+.cont-tab{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:12px 20px;border-bottom:2px solid transparent;cursor:pointer;transition:color .2s,border-color .2s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;}
+.cont-tab:hover{color:var(--cream2);}
+.cont-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* Story grid */
+.story-grid-wrap{padding:40px 48px;}
+.continent-section{display:none;}
+.continent-section.active{display:block;}
+.country-group{margin-bottom:48px;}
+.country-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.ch-flag{font-size:22px;}
+.ch-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--cream);}
+.ch-count{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-left:auto;}
+.story-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--bdr);}
+.story-card{background:var(--bg);padding:20px;cursor:pointer;transition:background .2s;position:relative;overflow:hidden;}
+.story-card:hover{background:var(--surf);}
+.story-card.locked{opacity:.65;cursor:default;}
+.sc-lock{position:absolute;top:10px;right:10px;font-size:12px;color:var(--muted);}
+.sc-popular{position:absolute;top:10px;right:10px;font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:var(--bg);padding:2px 7px;}
+.sc-em{font-size:28px;margin-bottom:10px;display:block;}
+.sc-type{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.sc-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--cream);line-height:1.3;margin-bottom:8px;}
+.sc-excerpt{font-size:13px;color:var(--cream2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.sc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--bdr);}
+.sc-cost{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);display:flex;align-items:center;gap:4px;}
+.sc-reads{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);}
+
+/* Token shop modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(12,9,5,.94);z-index:700;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surf);border:1px solid var(--bdr2);max-width:480px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.7);}
+.modal-head{padding:28px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;}
+.modal-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;line-height:1;padding:4px;}
+.modal-close:hover{color:var(--cream);}
+.modal-body{padding:20px 28px 28px;}
+.token-packages{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0;}
+.tok-pkg{border:1px solid var(--bdr);padding:16px 14px;cursor:pointer;transition:border-color .2s,background .2s;text-align:center;position:relative;}
+.tok-pkg:hover{border-color:var(--gold);background:rgba(200,146,42,.06);}
+.tok-pkg.popular-pkg::before{content:'POPULER';position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.14em;background:var(--gold);color:var(--bg);padding:2px 8px;}
+.tok-pkg-icon{font-size:24px;display:block;margin-bottom:8px;}
+.tok-pkg-amount{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--cream);display:block;}
+.tok-pkg-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px;}
+.tok-pkg-price{font-family:'DM Mono',monospace;font-size:11px;color:var(--cream2);}
+
+/* Read modal (story unlock) */
+.read-modal .modal-box{max-width:560px;}
+.rm-cost{display:flex;align-items:center;gap:8px;background:rgba(200,146,42,.08);border:1px solid rgba(200,146,42,.2);padding:12px 16px;margin:16px 0;}
+.rm-cost-icon{font-size:18px;}
+.rm-cost-text{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream2);}
+.rm-cost-val{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);margin-left:auto;}
+.btn-confirm{width:100%;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:14px;border:none;cursor:pointer;transition:background .2s;margin-top:8px;}
+.btn-confirm:hover{background:var(--gold2);}
+.btn-secondary{width:100%;background:transparent;border:1px solid var(--bdr);color:var(--cream2);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:12px;cursor:pointer;transition:border-color .2s;margin-top:6px;}
+.btn-secondary:hover{border-color:var(--cream2);}
+
+/* Achievement toast */
+.achieve-toast{position:fixed;bottom:28px;right:28px;background:var(--surf);border:1px solid var(--gold);padding:16px 20px;z-index:800;display:flex;align-items:center;gap:14px;transform:translateX(150%);transition:transform .4s cubic-bezier(.2,0,.1,1);max-width:300px;}
+.achieve-toast.show{transform:translateX(0);}
+.at-icon{font-size:28px;flex-shrink:0;}
+.at-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.at-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--cream);font-weight:600;}
+
+/* ── ROADMAP PAGE ── */
+.roadmap-page{padding:100px 48px 80px;min-height:100vh;max-width:1000px;margin:0 auto;}
+.roadmap-page .sec-lbl{margin-bottom:40px;}
+.rm-phases{display:flex;flex-direction:column;gap:0;}
+.rm-phase{display:grid;grid-template-columns:120px 1px 1fr;gap:0 32px;position:relative;}
+.rm-phase::before{content:'';position:absolute;left:120px;top:0;bottom:0;width:1px;background:var(--bdr);}
+.rm-dot{position:absolute;left:112px;top:28px;width:17px;height:17px;border:2px solid var(--bdr);background:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;z-index:1;}
+.rm-dot.live{border-color:var(--gold);background:var(--gold);}
+.rm-dot.next{border-color:var(--cream2);}
+.rm-dot.soon{border-color:var(--muted);}
+.rm-timing{padding:24px 0;text-align:right;}
+.rm-timing-val{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.rm-timing-val.live-now{color:var(--gold);}
+.rm-content{padding:20px 0 40px;}
+.rm-phase-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--cream);margin-bottom:4px;}
+.rm-phase-sub{font-size:14px;color:var(--muted);margin-bottom:20px;font-style:italic;}
+.rm-items{display:flex;flex-direction:column;gap:8px;}
+.rm-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--surf);border:1px solid var(--bdr);}
+.rm-item.done-item{border-color:rgba(107,140,110,.3);}
+.rm-item.active-item{border-color:rgba(200,146,42,.25);background:rgba(200,146,42,.04);}
+.ri-status{font-size:13px;flex-shrink:0;margin-top:1px;}
+.ri-body{}
+.ri-title{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream2);margin-bottom:3px;}
+.ri-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+.rm-phase-badge{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border:1px solid;margin-bottom:14px;}
+.badge-live{color:var(--gold);border-color:rgba(200,146,42,.4);background:rgba(200,146,42,.08);}
+.badge-next{color:var(--cream2);border-color:var(--bdr2);}
+.badge-future{color:var(--muted);border-color:var(--bdr);}
+
+/* ── LEADERBOARD (inside explore) ── */
+.leaderboard-wrap{padding:0 48px 60px;}
+.lb-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;}
+.lb-table{background:var(--surf);border:1px solid var(--bdr);}
+.lb-head{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.lb-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--bdr);transition:background .2s;}
+.lb-row:last-child{border-bottom:none;}
+.lb-row:hover{background:var(--surf2);}
+.lb-rank{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--muted);width:24px;text-align:center;flex-shrink:0;}
+.lb-rank.top{color:var(--gold);}
+.lb-avatar{width:28px;height:28px;border-radius:50%;background:var(--surf2);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.lb-name{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;color:var(--cream2);flex:1;}
+.lb-val{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream);}
+
+/* ── BADGES ── */
+.badges-wrap{padding:0 48px 60px;}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:24px;}
+.badge-card{background:var(--surf);border:1px solid var(--bdr);padding:20px 14px;text-align:center;transition:border-color .2s;}
+.badge-card.earned{border-color:rgba(200,146,42,.4);}
+.badge-card.locked-b{opacity:.4;}
+.badge-card:hover.earned{border-color:var(--gold);}
+.bc-icon{font-size:28px;display:block;margin-bottom:10px;}
+.bc-name{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream2);margin-bottom:4px;}
+.bc-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* Token gain animation */
+@keyframes tokenPop{0%{transform:scale(1);}40%{transform:scale(1.35);}100%{transform:scale(1);}}
+.token-pop{animation:tokenPop .35s ease;}
+
+@media(max-width:960px){
+  .quest-bar{padding:12px 16px;}
+  .continent-nav{padding:0 16px;}
+  .story-grid-wrap{padding:28px 16px;}
+  .leaderboard-wrap,.badges-wrap{padding:0 16px 40px;}
+  .lb-grid{grid-template-columns:1fr;}
+  .roadmap-page{padding:80px 16px 60px;}
+  .rm-phase{grid-template-columns:80px 1px 1fr;gap:0 16px;}
+  .rm-phase::before{left:80px;}
+  .rm-dot{left:72px;}
+}
 .about-strip{text-align:center;padding:64px 24px 48px;border-top:1px solid var(--bdr);margin-top:80px;}
 .about-text{font-size:15px;color:var(--muted);font-weight:300;line-height:1.9;max-width:500px;margin:0 auto 20px;font-style:italic;}
 .credit-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;}
@@ -628,12 +790,15 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
     <span class="logo-gem"></span>Autentico
   </a>
   <ul class="nav-links">
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#explore">Explore</a></li>
-    <li><a href="#regions">Regions</a></li>
+    <li><a href="#" onclick="showPage('landing')">Home</a></li>
+    <li><a href="#" onclick="showPage('explore')">Explore</a></li>
+    <li><a href="#" onclick="showPage('roadmap')">Roadmap</a></li>
   </ul>
   <div class="nav-right">
-    <a class="btn-nav" href="#" onclick="showPage('landing')">Generate</a>
+    <button class="nav-token-badge" onclick="showPage('explore')">
+      <span>🪙</span><span id="navTokens">150</span>
+    </button>
+    <a class="btn-nav" href="#" onclick="showPage('explore')">Play Now</a>
     <button class="nav-burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -911,7 +1076,605 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
 
 </div><!-- /page-landing -->
 
-<!-- ════════════ STORY PAGE ════════════ -->
+<!-- ════════════ EXPLORE / GAME PAGE ════════════ -->
+<div class="page" id="page-explore">
+  <div class="exp-page">
+
+    <!-- Hero -->
+    <div class="exp-hero">
+      <p class="sec-lbl" style="justify-content:center;">🌍 World Folklore</p>
+      <h2 class="sec-h">Explore <em>every</em> story,<br>from every land.</h2>
+      <p class="sec-sub" style="margin:0 auto;">Each story costs tokens to unlock. Earn tokens daily, complete quests, or watch ads — every story adds to your legend.</p>
+
+      <!-- Token HUD -->
+      <div class="token-hud">
+        <div class="hud-card">
+          <span class="hud-icon">🪙</span>
+          <div class="hud-info">
+            <div class="hud-val" id="tokenCount">150</div>
+            <div class="hud-lbl">Autentico Tokens</div>
+          </div>
+        </div>
+        <div class="hud-card">
+          <span class="hud-icon">📖</span>
+          <div class="hud-info">
+            <div class="hud-val" id="storiesRead">0</div>
+            <div class="hud-lbl">Stories Read</div>
+          </div>
+        </div>
+        <div class="hud-card">
+          <span class="hud-icon">🏅</span>
+          <div class="hud-info">
+            <div class="hud-val" id="badgeCount">2</div>
+            <div class="hud-lbl">Badges Earned</div>
+          </div>
+        </div>
+        <button class="hud-btn" onclick="openShop()">+ Buy Tokens</button>
+        <button class="hud-btn" style="background:transparent;border:1px solid var(--gold);color:var(--gold);" onclick="claimDaily()">🎁 Daily Reward</button>
+      </div>
+    </div>
+
+    <!-- Daily Quests -->
+    <div class="quest-bar">
+      <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);flex-shrink:0;">Today's Quests</span>
+      <div class="quest-item" id="q1" onclick="completeQuest('q1',20,'Read 1 Story')">
+        <span class="qi-icon">📖</span>
+        <div><div class="qi-text">Read 1 Story</div><div class="qi-reward">+20 🪙</div></div>
+      </div>
+      <div class="quest-item" id="q2" onclick="completeQuest('q2',15,'Watch an Ad')">
+        <span class="qi-icon">📺</span>
+        <div><div class="qi-text">Watch an Ad</div><div class="qi-reward">+15 🪙</div></div>
+      </div>
+      <div class="quest-item" id="q3" onclick="completeQuest('q3',30,'Read from 2 Continents')">
+        <span class="qi-icon">🌍</span>
+        <div><div class="qi-text">Read 2 Continents</div><div class="qi-reward">+30 🪙</div></div>
+      </div>
+      <div class="quest-item" id="q4" onclick="completeQuest('q4',50,'Unlock a Rare Story')">
+        <span class="qi-icon">⭐</span>
+        <div><div class="qi-text">Unlock Rare Story</div><div class="qi-reward">+50 🪙</div></div>
+      </div>
+      <div class="quest-item" id="q5" onclick="completeQuest('q5',10,'Share a Story')">
+        <span class="qi-icon">🔗</span>
+        <div><div class="qi-text">Share a Story</div><div class="qi-reward">+10 🪙</div></div>
+      </div>
+    </div>
+
+    <!-- Continent Tabs -->
+    <div class="continent-nav">
+      <button class="cont-tab active" onclick="switchContinent('asia',this)">🌏 Asia</button>
+      <button class="cont-tab" onclick="switchContinent('europe',this)">🏰 Europe</button>
+      <button class="cont-tab" onclick="switchContinent('africa',this)">🌍 Africa</button>
+      <button class="cont-tab" onclick="switchContinent('americas',this)">🌎 Americas</button>
+      <button class="cont-tab" onclick="switchContinent('oceania',this)">🏝️ Oceania</button>
+      <button class="cont-tab" onclick="switchContinent('middleeast',this)">🌙 Middle East</button>
+    </div>
+
+    <!-- Story Grid by Continent -->
+    <div class="story-grid-wrap">
+
+      <!-- ASIA -->
+      <div class="continent-section active" id="cont-asia">
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇮🇩</span><span class="ch-name">Indonesia</span><span class="ch-count">340+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Malin Kundang','The Boy Who Cursed His Mother','Origin Myth',30,'🌊','Indonesia',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🌊</span>
+              <div class="sc-type">Origin Myth</div>
+              <div class="sc-title">Malin Kundang</div>
+              <div class="sc-excerpt">A sailor who denied his own mother and was turned to stone by her dying curse. Indonesia's most beloved cautionary tale.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 30</span><span class="sc-reads">12.4k reads</span></div>
+            </div>
+            <div class="story-card" onclick="openRead('Nyi Roro Kidul','Queen of the Southern Sea','Spirit Tale',25,'🌸','Indonesia',false)">
+              <span class="sc-em">🌸</span>
+              <div class="sc-type">Spirit Tale</div>
+              <div class="sc-title">Nyi Roro Kidul</div>
+              <div class="sc-excerpt">The mystical queen who rules the Indian Ocean and claims souls who wear green near her waters.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 25</span><span class="sc-reads">9.1k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('Sangkuriang','The Mountain Builder','Love Legend',40,'🏔️','Indonesia',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">🏔️</span>
+              <div class="sc-type">Love Legend · Rare</div>
+              <div class="sc-title">Sangkuriang</div>
+              <div class="sc-excerpt">A forbidden love that created a volcano. The tragic tale behind Mount Tangkuban Perahu.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 40</span><span class="sc-reads">7.8k reads</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇯🇵</span><span class="ch-name">Japan</span><span class="ch-count">210+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Kaguya-hime','The Tale of the Bamboo Cutter','Origin Myth',30,'🎋','Japan',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🎋</span>
+              <div class="sc-type">Origin Myth</div>
+              <div class="sc-title">Kaguya-hime</div>
+              <div class="sc-excerpt">A celestial princess found inside a glowing bamboo stalk who captivated emperors but belonged to the moon.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 30</span><span class="sc-reads">18.2k reads</span></div>
+            </div>
+            <div class="story-card" onclick="openRead('Momotaro','The Peach Boy','Hero\'s Journey',20,'🍑','Japan',false)">
+              <span class="sc-em">🍑</span>
+              <div class="sc-type">Hero's Journey</div>
+              <div class="sc-title">Momotaro</div>
+              <div class="sc-excerpt">Born from a giant peach, a boy befriends animals and leads an expedition against the demon island.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 20</span><span class="sc-reads">11.5k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('Urashima Taro','The Fisherman and the Palace','Love Legend',35,'🐢','Japan',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">🐢</span>
+              <div class="sc-type">Love Legend · Rare</div>
+              <div class="sc-title">Urashima Taro</div>
+              <div class="sc-excerpt">A fisherman saves a turtle, is brought to an underwater palace, returns to find centuries have passed.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 35</span><span class="sc-reads">6.3k reads</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇮🇳</span><span class="ch-name">India</span><span class="ch-count">520+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Shakuntala','The Forgotten Queen','Love Legend',30,'🌺','India',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🌺</span>
+              <div class="sc-type">Love Legend</div>
+              <div class="sc-title">Shakuntala</div>
+              <div class="sc-excerpt">A king falls in love with a forest girl, forgets her due to a sage's curse, and must rediscover their bond.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 30</span><span class="sc-reads">14.7k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('Vikramaditya','The Throne of 32 Statues','Epic Saga',50,'👑','India',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">👑</span>
+              <div class="sc-type">Epic Saga · Legendary</div>
+              <div class="sc-title">Vikramaditya's Throne</div>
+              <div class="sc-excerpt">32 celestial apsaras guard a legendary throne, each telling a tale of the great king's impossible virtue.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 50</span><span class="sc-reads">5.2k reads</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EUROPE -->
+      <div class="continent-section" id="cont-europe">
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇬🇷</span><span class="ch-name">Greece</span><span class="ch-count">190+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Persephone','Queen of the Underworld','Origin Myth',30,'🌙','Greece',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🌙</span>
+              <div class="sc-type">Origin Myth</div>
+              <div class="sc-title">Persephone Unbound</div>
+              <div class="sc-excerpt">They say she was taken. But the pomegranate seeds were counted, and she chose each one with open eyes.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 30</span><span class="sc-reads">21.3k reads</span></div>
+            </div>
+            <div class="story-card" onclick="openRead('Medusa','The First Gorgon','Spirit Tale',25,'🐍','Greece',false)">
+              <span class="sc-em">🐍</span>
+              <div class="sc-type">Spirit Tale</div>
+              <div class="sc-title">Medusa's True Story</div>
+              <div class="sc-excerpt">Before she became a monster, she was a priestess. The version Athena never wanted told.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 25</span><span class="sc-reads">16.8k reads</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇳🇴</span><span class="ch-name">Norway</span><span class="ch-count">140+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Fenrir','The Wolf Who Breaks the World','Epic Saga',35,'🐺','Norway',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🐺</span>
+              <div class="sc-type">Epic Saga</div>
+              <div class="sc-title">Fenrir Breaks His Chain</div>
+              <div class="sc-excerpt">The gods feared the wolf-child so they bound him — but Ragnarok approaches and chains do not hold gods.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 35</span><span class="sc-reads">8.9k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('Odin','The Wandering God','Epic Saga',50,'👁️','Norway',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">👁️</span>
+              <div class="sc-type">Epic Saga · Legendary</div>
+              <div class="sc-title">Odin's Nine Nights</div>
+              <div class="sc-excerpt">Odin hangs himself from Yggdrasil for nine nights to discover the runes of all knowledge.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 50</span><span class="sc-reads">4.1k reads</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AFRICA -->
+      <div class="continent-section" id="cont-africa">
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇳🇬</span><span class="ch-name">Nigeria</span><span class="ch-count">160+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Anansi','Anansi Steals the Sun\'s Name','Trickster Story',25,'🕷️','Nigeria',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🕷️</span>
+              <div class="sc-type">Trickster Story</div>
+              <div class="sc-title">Anansi Steals the Sun's Name</div>
+              <div class="sc-excerpt">With nothing but eight legs and a silver tongue, Anansi wagered the impossible against the sky god — and won.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 25</span><span class="sc-reads">13.6k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('Sango','Lord of Thunder','Creation Story',45,'⚡','Nigeria',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">⚡</span>
+              <div class="sc-type">Creation Story · Rare</div>
+              <div class="sc-title">Sango, Lord of Thunder</div>
+              <div class="sc-excerpt">The Orisha of lightning who burned his own palace and became a god through his final, terrible act.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 45</span><span class="sc-reads">7.2k reads</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇪🇬</span><span class="ch-name">Egypt</span><span class="ch-count">310+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Osiris','Death and Rebirth of Osiris','Creation Story',30,'☥','Egypt',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">☥</span>
+              <div class="sc-type">Creation Story</div>
+              <div class="sc-title">Death and Rebirth of Osiris</div>
+              <div class="sc-excerpt">Set betrayed his brother, scattered his body across the Nile — but love found every piece.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 30</span><span class="sc-reads">19.4k reads</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AMERICAS -->
+      <div class="continent-section" id="cont-americas">
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇲🇽</span><span class="ch-name">Mexico</span><span class="ch-count">170+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Quetzalcoatl','The Feathered Serpent Returns','Creation Story',35,'🐍','Mexico',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🐍</span>
+              <div class="sc-type">Creation Story</div>
+              <div class="sc-title">Quetzalcoatl Returns</div>
+              <div class="sc-excerpt">The feathered serpent god who created humanity from ground bones and his own blood, then sailed east on a raft of serpents.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 35</span><span class="sc-reads">10.8k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('La Llorona','The Weeping Woman','Spirit Tale',40,'👻','Mexico',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">👻</span>
+              <div class="sc-type">Spirit Tale · Rare</div>
+              <div class="sc-title">La Llorona</div>
+              <div class="sc-excerpt">A mother who drowned her own children and now wanders rivers crying for them through eternity.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 40</span><span class="sc-reads">8.3k reads</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇧🇷</span><span class="ch-name">Brazil</span><span class="ch-count">150+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Iara','The River Siren','Spirit Tale',25,'🧜','Brazil',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🧜</span>
+              <div class="sc-type">Spirit Tale</div>
+              <div class="sc-title">Iara the River Siren</div>
+              <div class="sc-excerpt">Half woman, half fish, she lures fishermen into the Amazon with her song and they are never seen again.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 25</span><span class="sc-reads">9.7k reads</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCEANIA -->
+      <div class="continent-section" id="cont-oceania">
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇦🇺</span><span class="ch-name">Australia</span><span class="ch-count">90+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Rainbow Serpent','Creator of Rivers','Creation Story',30,'🌈','Australia',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">🌈</span>
+              <div class="sc-type">Creation Story</div>
+              <div class="sc-title">The Rainbow Serpent</div>
+              <div class="sc-excerpt">The great serpent who slept under the earth, and whose rising created the rivers, valleys, and mountains of the Dreamtime.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 30</span><span class="sc-reads">7.1k reads</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🇳🇿</span><span class="ch-name">New Zealand (Māori)</span><span class="ch-count">80+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Maui','Maui Snares the Sun','Hero\'s Journey',25,'☀️','New Zealand',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">☀️</span>
+              <div class="sc-type">Hero's Journey</div>
+              <div class="sc-title">Maui Snares the Sun</div>
+              <div class="sc-excerpt">The demigod who lassoed the sun with his grandmother's jawbone to slow it down and give people more daylight.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 25</span><span class="sc-reads">11.2k reads</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIDDLE EAST -->
+      <div class="continent-section" id="cont-middleeast">
+        <div class="country-group">
+          <div class="country-head"><span class="ch-flag">🌙</span><span class="ch-name">Arabia</span><span class="ch-count">280+ stories</span></div>
+          <div class="story-cards">
+            <div class="story-card" onclick="openRead('Scheherazade','The Storyteller Who Lived','Love Legend',35,'📖','Arabia',false)">
+              <span class="sc-popular">🔥 #1 Popular</span>
+              <span class="sc-em">📖</span>
+              <div class="sc-type">Love Legend</div>
+              <div class="sc-title">Scheherazade Lives</div>
+              <div class="sc-excerpt">To survive a king who kills his brides at dawn, she told one story each night — and left it unfinished until sunrise.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 35</span><span class="sc-reads">22.7k reads</span></div>
+            </div>
+            <div class="story-card locked" onclick="openRead('Sinbad','The Seventh Voyage','Epic Saga',45,'⛵','Arabia',true)">
+              <span class="sc-lock">🔒</span>
+              <span class="sc-em">⛵</span>
+              <div class="sc-type">Epic Saga · Legendary</div>
+              <div class="sc-title">Sinbad's Final Voyage</div>
+              <div class="sc-excerpt">The seventh and last voyage — the one Sinbad himself refused to speak of for forty years.</div>
+              <div class="sc-foot"><span class="sc-cost">🪙 45</span><span class="sc-reads">5.6k reads</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="leaderboard-wrap">
+      <p class="sec-lbl">🏆 Leaderboard</p>
+      <div class="lb-grid">
+        <div class="lb-table">
+          <div class="lb-head"><span class="lb-title">Top Readers — This Month</span></div>
+          <div class="lb-row"><span class="lb-rank top">1</span><span class="lb-avatar">🧝</span><span class="lb-name">folklore_kai</span><span class="lb-val">48 stories</span></div>
+          <div class="lb-row"><span class="lb-rank top">2</span><span class="lb-avatar">🐉</span><span class="lb-name">myth_seeker</span><span class="lb-val">41 stories</span></div>
+          <div class="lb-row"><span class="lb-rank top">3</span><span class="lb-avatar">🌙</span><span class="lb-name">araby_tales</span><span class="lb-val">37 stories</span></div>
+          <div class="lb-row"><span class="lb-rank">4</span><span class="lb-avatar">🦊</span><span class="lb-name">kitsune_fan</span><span class="lb-val">29 stories</span></div>
+          <div class="lb-row"><span class="lb-rank">5</span><span class="lb-avatar">🌺</span><span class="lb-name">nusantara_x</span><span class="lb-val">24 stories</span></div>
+          <div class="lb-row" style="background:rgba(200,146,42,.05);border-top:1px solid rgba(200,146,42,.15)"><span class="lb-rank" style="color:var(--gold)">—</span><span class="lb-avatar">⭐</span><span class="lb-name" style="color:var(--gold)">You</span><span class="lb-val" id="yourReads">0 stories</span></div>
+        </div>
+        <div class="lb-table">
+          <div class="lb-head"><span class="lb-title">Most Tokens Spent</span></div>
+          <div class="lb-row"><span class="lb-rank top">1</span><span class="lb-avatar">👑</span><span class="lb-name">legend_lord</span><span class="lb-val">🪙 2,400</span></div>
+          <div class="lb-row"><span class="lb-rank top">2</span><span class="lb-avatar">🔥</span><span class="lb-name">folklore_kai</span><span class="lb-val">🪙 1,850</span></div>
+          <div class="lb-row"><span class="lb-rank top">3</span><span class="lb-avatar">🌊</span><span class="lb-name">sea_wanderer</span><span class="lb-val">🪙 1,420</span></div>
+          <div class="lb-row"><span class="lb-rank">4</span><span class="lb-avatar">⚡</span><span class="lb-name">myth_seeker</span><span class="lb-val">🪙 980</span></div>
+          <div class="lb-row"><span class="lb-rank">5</span><span class="lb-avatar">🌸</span><span class="lb-name">sakura_tales</span><span class="lb-val">🪙 740</span></div>
+          <div class="lb-row" style="background:rgba(200,146,42,.05);border-top:1px solid rgba(200,146,42,.15)"><span class="lb-rank" style="color:var(--gold)">—</span><span class="lb-avatar">⭐</span><span class="lb-name" style="color:var(--gold)">You</span><span class="lb-val" id="yourTokensSpent">🪙 0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="badges-wrap">
+      <p class="sec-lbl">🏅 Your Badges</p>
+      <div class="badges-grid">
+        <div class="badge-card earned" id="badge-firstread">
+          <span class="bc-icon">📖</span>
+          <div class="bc-name">First Story</div>
+          <div class="bc-desc">Read your first folklore tale</div>
+        </div>
+        <div class="badge-card earned">
+          <span class="bc-icon">🌅</span>
+          <div class="bc-name">Early Riser</div>
+          <div class="bc-desc">Claimed your first daily reward</div>
+        </div>
+        <div class="badge-card locked-b" id="badge-explorer">
+          <span class="bc-icon">🌍</span>
+          <div class="bc-name">World Explorer</div>
+          <div class="bc-desc">Read from 5 different countries</div>
+        </div>
+        <div class="badge-card locked-b" id="badge-collector">
+          <span class="bc-icon">🏆</span>
+          <div class="bc-name">Collector</div>
+          <div class="bc-desc">Unlock 10 stories</div>
+        </div>
+        <div class="badge-card locked-b" id="badge-continent">
+          <span class="bc-icon">🗺️</span>
+          <div class="bc-name">Continent Hopper</div>
+          <div class="bc-desc">Read from all 6 continents</div>
+        </div>
+        <div class="badge-card locked-b" id="badge-legend">
+          <span class="bc-icon">👑</span>
+          <div class="bc-name">Living Legend</div>
+          <div class="bc-desc">Reach top 3 on leaderboard</div>
+        </div>
+        <div class="badge-card locked-b" id="badge-rare">
+          <span class="bc-icon">💎</span>
+          <div class="bc-name">Rare Finder</div>
+          <div class="bc-desc">Unlock a Legendary story</div>
+        </div>
+        <div class="badge-card locked-b" id="badge-nft">
+          <span class="bc-icon">🖼️</span>
+          <div class="bc-name">NFT Holder</div>
+          <div class="bc-desc">Own a collectible story NFT</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════ ROADMAP PAGE ════════════ -->
+<div class="page" id="page-roadmap">
+  <div class="roadmap-page">
+    <p class="sec-lbl">Development Roadmap</p>
+    <h2 class="sec-h" style="margin-bottom:8px;">Building the world's<br>greatest <em>folklore</em> game.</h2>
+    <p style="font-size:15px;color:var(--muted);font-style:italic;margin-bottom:60px;font-weight:300;">Open roadmap — updated in real time. Follow <a href="https://x.com/autenticofun" target="_blank" style="color:var(--gold);">@autenticofun</a> for updates.</p>
+
+    <div class="rm-phases">
+
+      <!-- PHASE 1 — LIVE -->
+      <div class="rm-phase">
+        <div class="rm-timing"><div class="rm-timing-val live-now">Live Now</div></div>
+        <div></div>
+        <div class="rm-content">
+          <div class="rm-phase-badge badge-live">● Phase 1 — Foundation</div>
+          <div class="rm-phase-title">The Door Opens</div>
+          <div class="rm-phase-sub">Core experience, visual identity & world building</div>
+          <div class="rm-items">
+            <div class="rm-item done-item"><span class="ri-status">✅</span><div><div class="ri-title">Landing Page & Brand Identity</div><div class="ri-desc">Autentico visual language — dark folklore aesthetic, animated door, garden paradise teaser.</div></div></div>
+            <div class="rm-item done-item"><span class="ri-status">✅</span><div><div class="ri-title">Story Mock Library</div><div class="ri-desc">80+ folklore entries across 6 continents, categorized by country with popularity rankings.</div></div></div>
+            <div class="rm-item done-item"><span class="ri-status">✅</span><div><div class="ri-title">Game Prototype</div><div class="ri-desc">Token system, daily quests, leaderboard, badge framework — all running client-side.</div></div></div>
+            <div class="rm-item active-item"><span class="ri-status">🔄</span><div><div class="ri-title">X / Twitter Community Launch</div><div class="ri-desc">Building early community at @autenticofun. Sharing folklore daily, gathering waitlist.</div></div></div>
+          </div>
+        </div>
+        <div class="rm-dot live">✦</div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="rm-phase">
+        <div class="rm-timing"><div class="rm-timing-val">Q3 2026</div></div>
+        <div></div>
+        <div class="rm-content">
+          <div class="rm-phase-badge badge-next">○ Phase 2 — AI Engine</div>
+          <div class="rm-phase-title">Stories Come Alive</div>
+          <div class="rm-phase-sub">Connecting the Telegram AI bot as live story generator</div>
+          <div class="rm-items">
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Telegram Bot Integration</div><div class="ri-desc">Connect custom AI bot to generate real, unique folklore stories on demand per country/type selection.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Token-Gated Story Generation</div><div class="ri-desc">Each AI story request costs Autentico tokens. Free users get 3 stories/day, paid users unlimited.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">User Authentication</div><div class="ri-desc">Supabase auth — login with Google/X. Token balances, reading history, and badges persisted per account.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">AI-Generated Illustrations</div><div class="ri-desc">Each story gets a unique cover art generated in the visual style of the culture's artistic tradition.</div></div></div>
+          </div>
+        </div>
+        <div class="rm-dot next"></div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="rm-phase">
+        <div class="rm-timing"><div class="rm-timing-val">Q4 2026</div></div>
+        <div></div>
+        <div class="rm-content">
+          <div class="rm-phase-badge badge-next">○ Phase 3 — Economy</div>
+          <div class="rm-phase-title">The Token Economy</div>
+          <div class="rm-phase-sub">Real payment integration & reward loops</div>
+          <div class="rm-items">
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Payment Gateway (Midtrans + Stripe)</div><div class="ri-desc">Buy Autentico token bundles with IDR, USD, or major currencies. Instant top-up via transfer, card, or e-wallet.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Ad Reward System</div><div class="ri-desc">Watch 30-second ads to earn 15 free tokens. Powered by Google AdSense or AdMob integration.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Quest Engine (Backend)</div><div class="ri-desc">Real daily quests with server-side validation. Streak rewards, weekly challenges, bonus multipliers.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Live Leaderboard</div><div class="ri-desc">Real-time global and regional rankings synced from Supabase. Monthly prize pool for top 10 readers.</div></div></div>
+          </div>
+        </div>
+        <div class="rm-dot soon"></div>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="rm-phase">
+        <div class="rm-timing"><div class="rm-timing-val">Q1 2027</div></div>
+        <div></div>
+        <div class="rm-content">
+          <div class="rm-phase-badge badge-future">○ Phase 4 — Collectibles</div>
+          <div class="rm-phase-title">Legends Made Permanent</div>
+          <div class="rm-phase-sub">NFT story collectibles & exclusive character unlocks</div>
+          <div class="rm-items">
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Story NFT Minting</div><div class="ri-desc">Every AI-generated story can be minted as a unique NFT on Polygon. You own your tale forever.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Exclusive Folklore Characters</div><div class="ri-desc">Unlock Anansi, Nyi Roro Kidul, Fenrir as profile companions. Each has special abilities in the quest system.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">NFT Marketplace</div><div class="ri-desc">Trade your story NFTs with other collectors. Rare generation types command premium prices.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Audio Narration NFTs</div><div class="ri-desc">AI-narrated audio versions of stories minted as 1-of-1 audio NFTs with cultural music.</div></div></div>
+          </div>
+        </div>
+        <div class="rm-dot soon"></div>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="rm-phase" style="padding-bottom:0;">
+        <div class="rm-timing"><div class="rm-timing-val">2027+</div></div>
+        <div></div>
+        <div class="rm-content" style="padding-bottom:0;">
+          <div class="rm-phase-badge badge-future">○ Phase 5 — Ecosystem</div>
+          <div class="rm-phase-title">A Living World</div>
+          <div class="rm-phase-sub">Mobile app, creator economy & global expansion</div>
+          <div class="rm-items">
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">iOS & Android App</div><div class="ri-desc">Native mobile experience with offline reading, push notifications for daily quests, and AR character viewing.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Creator Program</div><div class="ri-desc">Cultural storytellers earn tokens when their submitted folklore is read. Community-sourced content.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">Multiplayer Quest Guilds</div><div class="ri-desc">Form reading guilds with friends. Complete group challenges, share token pools, compete as a team.</div></div></div>
+            <div class="rm-item"><span class="ri-status">⬜</span><div><div class="ri-title">School & Library Partnerships</div><div class="ri-desc">Educational tier for institutions. Bring authentic folklore into classrooms across Southeast Asia and beyond.</div></div></div>
+          </div>
+        </div>
+        <div class="rm-dot soon"></div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center;margin-top:72px;padding:48px 24px;border-top:1px solid var(--bdr);">
+      <p class="sec-lbl" style="justify-content:center;">Join the journey</p>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,52px);font-weight:300;color:var(--cream);margin-bottom:16px;">Be part of the <em>founding</em> legend.</h3>
+      <p style="font-size:15px;color:var(--muted);font-style:italic;margin-bottom:32px;max-width:420px;margin-left:auto;margin-right:auto;">Early users get 500 bonus tokens + Founder badge when Phase 2 launches. Follow us to stay in the loop.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-cta" onclick="claimFounder()">Claim Founder Status</button>
+        <a class="btn-cta" href="https://x.com/autenticofun" target="_blank" style="background:transparent;border:2px solid var(--gold);color:var(--gold);">Follow @autenticofun ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOKEN SHOP MODAL -->
+<div class="modal-overlay" id="shopModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">🪙 Token Shop</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--cream);">Buy Autentico Tokens</h3>
+      </div>
+      <button class="modal-close" onclick="closeShop()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Payment integration coming in Phase 3. For now, tap any package to receive tokens instantly as a founder preview.</p>
+      <div class="token-packages">
+        <div class="tok-pkg" onclick="buyTokens(50,'Rp 5.000')">
+          <span class="tok-pkg-icon">🪙</span>
+          <span class="tok-pkg-amount">50</span>
+          <span class="tok-pkg-label">Starter</span>
+          <span class="tok-pkg-price">Rp 5.000</span>
+        </div>
+        <div class="tok-pkg popular-pkg" onclick="buyTokens(200,'Rp 15.000')">
+          <span class="tok-pkg-icon">🪙🪙</span>
+          <span class="tok-pkg-amount">200</span>
+          <span class="tok-pkg-label">Explorer</span>
+          <span class="tok-pkg-price">Rp 15.000</span>
+        </div>
+        <div class="tok-pkg" onclick="buyTokens(500,'Rp 30.000')">
+          <span class="tok-pkg-icon">🪙🪙🪙</span>
+          <span class="tok-pkg-amount">500</span>
+          <span class="tok-pkg-label">Legend</span>
+          <span class="tok-pkg-price">Rp 30.000</span>
+        </div>
+        <div class="tok-pkg" onclick="buyTokens(1200,'Rp 60.000')">
+          <span class="tok-pkg-icon">👑</span>
+          <span class="tok-pkg-amount">1,200</span>
+          <span class="tok-pkg-label">Mythic</span>
+          <span class="tok-pkg-price">Rp 60.000</span>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--bdr);padding-top:16px;margin-top:8px;">
+        <p style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Or earn free tokens</p>
+        <button class="btn-secondary" onclick="earnAd()">📺 Watch Ad — +15 🪙</button>
+        <button class="btn-secondary" onclick="claimDaily()">🎁 Daily Login — +50 🪙</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- READ / UNLOCK MODAL -->
+<div class="modal-overlay read-modal" id="readModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;" id="rm-type">Origin Myth</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--cream);" id="rm-title">Story Title</h3>
+      </div>
+      <button class="modal-close" onclick="closeRead()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="rm-cost">
+        <span class="rm-cost-icon">🪙</span>
+        <span class="rm-cost-text">Cost to unlock this story</span>
+        <span class="rm-cost-val" id="rm-cost-val">30</span>
+      </div>
+      <p style="font-size:14px;color:var(--cream2);line-height:1.75;margin-bottom:4px;" id="rm-excerpt"></p>
+      <p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.1em;margin-bottom:16px;" id="rm-meta"></p>
+      <button class="btn-confirm" id="rm-btn" onclick="confirmRead()">🪙 Unlock & Read</button>
+      <button class="btn-secondary" onclick="closeRead()">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACHIEVEMENT TOAST -->
+<div class="achieve-toast" id="achieveToast">
+  <span class="at-icon" id="toastIcon">🏅</span>
+  <div><div class="at-label">Achievement Unlocked</div><div class="at-name" id="toastName">First Story!</div></div>
+</div>
 <div class="page" id="page-story">
 
   <!-- Full-bleed story hero -->
@@ -1208,7 +1971,195 @@ function seekAudio(e){
 }
 function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
 
-// ── SCROLL FADE-IN ───────────────────────────
+// ── GAME STATE ────────────────────────────────
+let gameState = {
+  tokens: 150,
+  storiesRead: 0,
+  tokensSpent: 0,
+  continentsRead: new Set(),
+  countriesRead: new Set(),
+  questsDone: new Set(),
+  dailyClaimed: false,
+  founderClaimed: false,
+};
+let pendingStory = null;
+
+function syncHUD() {
+  ['tokenCount','navTokens'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = gameState.tokens; el.classList.add('token-pop'); setTimeout(()=>el.classList.remove('token-pop'),400); }
+  });
+  const sr = document.getElementById('storiesRead'); if(sr) sr.textContent = gameState.storiesRead;
+  const yr = document.getElementById('yourReads'); if(yr) yr.textContent = gameState.storiesRead + ' stories';
+  const yt = document.getElementById('yourTokensSpent'); if(yt) yt.textContent = '🪙 ' + gameState.tokensSpent;
+}
+
+// ── CONTINENT TABS ────────────────────────────
+function switchContinent(id, btn) {
+  document.querySelectorAll('.cont-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.continent-section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('cont-' + id).classList.add('active');
+}
+
+// ── DAILY REWARD ──────────────────────────────
+function claimDaily() {
+  if (gameState.dailyClaimed) { showToast('🌅','Already Claimed','Come back tomorrow!'); return; }
+  gameState.tokens += 50;
+  gameState.dailyClaimed = true;
+  closeShop();
+  syncHUD();
+  showToast('🎁','Daily Reward!','+50 Tokens Claimed');
+}
+
+// ── QUEST SYSTEM ──────────────────────────────
+function completeQuest(id, reward, name) {
+  if (gameState.questsDone.has(id)) return;
+  // Simulate quest completion (in real app would validate server-side)
+  if (id === 'q2') { earnAd(); return; }
+  gameState.questsDone.add(id);
+  gameState.tokens += reward;
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('done'); el.innerHTML += '<span class="qi-check">✓</span>'; }
+  syncHUD();
+  showToast('⚡','Quest Complete!',name + ' +' + reward + ' 🪙');
+}
+
+// ── TOKEN SHOP ────────────────────────────────
+function openShop() { document.getElementById('shopModal').classList.add('open'); }
+function closeShop() { document.getElementById('shopModal').classList.remove('open'); }
+
+function buyTokens(amount, price) {
+  gameState.tokens += amount;
+  closeShop();
+  syncHUD();
+  showToast('🪙','Tokens Added!','+'+ amount +' tokens · ' + price);
+}
+
+function earnAd() {
+  closeShop();
+  // Simulate ad watch with a brief loading state
+  showToast('📺','Loading Ad…','Please wait 3 seconds');
+  setTimeout(() => {
+    gameState.tokens += 15;
+    gameState.questsDone.add('q2');
+    const el = document.getElementById('q2');
+    if (el && !el.classList.contains('done')) { el.classList.add('done'); el.innerHTML += '<span class="qi-check">✓</span>'; }
+    syncHUD();
+    showToast('📺','Ad Complete!','+15 Tokens Earned');
+  }, 3000);
+}
+
+// ── READ / UNLOCK MODAL ───────────────────────
+function openRead(title, subtitle, type, cost, emoji, country, locked) {
+  pendingStory = { title, subtitle, type, cost, emoji, country };
+  document.getElementById('rm-title').textContent = title;
+  document.getElementById('rm-type').textContent = emoji + '  ' + type + '  ·  ' + country;
+  document.getElementById('rm-excerpt').textContent = subtitle;
+  document.getElementById('rm-meta').textContent = 'UNLOCK COST  ·  ' + cost + ' TOKENS';
+  document.getElementById('rm-cost-val').textContent = '🪙 ' + cost;
+  const btn = document.getElementById('rm-btn');
+  if (gameState.tokens >= cost) {
+    btn.textContent = '🪙 Unlock & Read — ' + cost + ' tokens';
+    btn.style.opacity = '1'; btn.disabled = false;
+  } else {
+    btn.textContent = '⚠ Not enough tokens — Buy More';
+    btn.style.opacity = '.7'; btn.disabled = false;
+    btn.onclick = () => { closeRead(); openShop(); };
+    document.getElementById('readModal').classList.add('open');
+    return;
+  }
+  btn.onclick = confirmRead;
+  document.getElementById('readModal').classList.add('open');
+}
+function closeRead() { document.getElementById('readModal').classList.remove('open'); pendingStory = null; }
+
+function confirmRead() {
+  if (!pendingStory) return;
+  const { title, cost, country, type } = pendingStory;
+  if (gameState.tokens < cost) { openShop(); return; }
+
+  gameState.tokens -= cost;
+  gameState.tokensSpent += cost;
+  gameState.storiesRead++;
+  gameState.countriesRead.add(country);
+
+  // Determine continent from country
+  const continentMap = {
+    'Indonesia':'asia','Japan':'asia','India':'asia','China':'asia',
+    'Greece':'europe','Norway':'europe','Ireland':'europe',
+    'Nigeria':'africa','Egypt':'africa',
+    'Mexico':'americas','Brazil':'americas',
+    'Australia':'oceania','New Zealand':'oceania',
+    'Arabia':'middleeast'
+  };
+  if (continentMap[country]) gameState.continentsRead.add(continentMap[country]);
+
+  closeRead();
+  syncHUD();
+
+  // Quest auto-complete
+  if (gameState.storiesRead >= 1 && !gameState.questsDone.has('q1')) completeQuest('q1', 0, 'Read 1 Story');
+  if (gameState.continentsRead.size >= 2 && !gameState.questsDone.has('q3')) completeQuest('q3', 0, 'Read 2 Continents');
+  if (type && (type.includes('Rare') || type.includes('Legendary')) && !gameState.questsDone.has('q4')) completeQuest('q4', 0, 'Unlock Rare Story');
+
+  // Check badges
+  checkBadges();
+
+  // Show read confirmation then navigate to story
+  showToast('📖','Story Unlocked!', title);
+  setTimeout(() => showPage('story'), 1200);
+}
+
+// ── BADGES ───────────────────────────────────
+function checkBadges() {
+  let earned = [];
+  if (gameState.storiesRead === 1) earned.push({id:'badge-firstread', icon:'📖', name:'First Story!'});
+  if (gameState.countriesRead.size >= 5) earned.push({id:'badge-explorer', icon:'🌍', name:'World Explorer!'});
+  if (gameState.storiesRead >= 10) earned.push({id:'badge-collector', icon:'🏆', name:'Collector!'});
+  if (gameState.continentsRead.size >= 6) earned.push({id:'badge-continent', icon:'🗺️', name:'Continent Hopper!'});
+  if (gameState.tokensSpent >= 200) earned.push({id:'badge-rare', icon:'💎', name:'Rare Finder!'});
+
+  earned.forEach((b, i) => {
+    const el = document.getElementById(b.id);
+    if (el && el.classList.contains('locked-b')) {
+      setTimeout(() => {
+        el.classList.remove('locked-b'); el.classList.add('earned');
+        const bc = parseInt(document.getElementById('badgeCount').textContent) + 1;
+        document.getElementById('badgeCount').textContent = bc;
+        showToast(b.icon, 'Badge Unlocked!', b.name);
+      }, i * 1200);
+    }
+  });
+}
+
+// ── FOUNDER CLAIM ─────────────────────────────
+function claimFounder() {
+  if (gameState.founderClaimed) { showToast('👑','Already Claimed!','You are a Founder'); return; }
+  gameState.founderClaimed = true;
+  gameState.tokens += 500;
+  syncHUD();
+  showToast('👑','Founder Status!','+500 Tokens + Founder Badge');
+}
+
+// ── TOAST NOTIFICATION ────────────────────────
+let toastTimer = null;
+function showToast(icon, label, name) {
+  const t = document.getElementById('achieveToast');
+  document.getElementById('toastIcon').textContent = icon;
+  document.getElementById('toastName').textContent = name;
+  t.querySelector('.at-label').textContent = label;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Close modals on overlay click
+document.getElementById('shopModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeShop(); });
+document.getElementById('readModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeRead(); });
+
+// Init
+syncHUD();
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
 }),{threshold:.08});
