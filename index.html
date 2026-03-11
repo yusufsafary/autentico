@@ -73,48 +73,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,8.5vw,108px);font-weight:300;line-height:1.03;color:var(--cream);margin-bottom:20px;opacity:0;animation:fadeUp .8s ease .22s forwards;}
 .hero-title em{font-style:italic;color:var(--gold2);}
 .hero-sub{font-size:clamp(15px,2.5vw,18px);font-weight:300;line-height:1.8;color:var(--cream2);max-width:520px;margin:0 auto 40px;opacity:0;animation:fadeUp .8s ease .36s forwards;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.p-adv-toggle.open 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
 /* MARQUEE */
 .mqw{background:var(--surf);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:12px 0;overflow:hidden;}
 .mq{display:flex;animation:mq 30s linear infinite;white-space:nowrap;}
@@ -1098,6 +1056,361 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
   .ec:active{transform:scale(.98);}
   .how-card:active{background:var(--surf2);}
   .rc:active .rn{color:var(--gold2);}
+}
+
+/* ══════════════════════════════════════════
+   MOBILE OVERHAUL — Comprehensive HP fixes
+══════════════════════════════════════════ */
+
+/* ─── Base: disable desktop cursor on touch ─── */
+@media(pointer:coarse){
+  .cur,.cur-ring{display:none;}
+}
+
+/* ─── NAV: mobile nav bar ─── */
+@media(max-width:960px){
+  .nav{padding:12px 16px;}
+  .logo{font-size:15px;}
+  .nav-token-badge{font-size:10px;padding:5px 10px;}
+}
+
+/* ─── HERO: mobile hero ─── */
+@media(max-width:600px){
+  .hero{padding:72px 16px 36px;min-height:95svh;}
+  .hero-title{font-size:clamp(36px,11vw,60px);line-height:1.05;margin-bottom:16px;}
+  .hero-sub{font-size:15px;margin-bottom:24px;padding:0 4px;}
+  .eyebrow{font-size:9px;margin-bottom:16px;}
+  .h-ring1{width:320px;height:320px;}
+  .h-ring2{width:480px;height:480px;}
+  .h-glow{width:400px;height:400px;}
+  .h-glow2{display:none;}
+  /* Door scene mobile: smaller, centered */
+  .door-scene{margin-top:24px;}
+  .door-frame{width:min(260px,78vw);height:min(370px,112vw);}
+  .door-cta{font-size:7px;letter-spacing:.2em;margin-top:12px;}
+}
+
+/* ─── MARQUEE: readable on mobile ─── */
+@media(max-width:600px){
+  .mi{font-size:8.5px;padding:0 16px;gap:12px;}
+}
+
+/* ─── HOW IT WORKS ─── */
+@media(max-width:600px){
+  .how-sec{padding:48px 16px 48px;}
+  .how-grid{margin-top:36px;}
+  .how-card{padding:28px 20px;}
+  .hw-n{font-size:60px;}
+  .hw-ic{font-size:26px;margin-bottom:14px;}
+  .hw-t{font-size:18px;}
+  .hw-d{font-size:13px;}
+}
+
+/* ─── EXAMPLES GRID ─── */
+@media(max-width:600px){
+  .ex-sec{padding:56px 0;}
+  .ex-in{padding:0;}
+  .ex-grid{grid-template-columns:1fr;gap:0;}
+  .ei{height:140px;font-size:48px;}
+  .et{font-size:17px;}
+  .ee{font-size:12px;}
+}
+
+/* ─── REGIONS ─── */
+@media(max-width:600px){
+  .reg-sec{padding:48px 16px;}
+  .rg{grid-template-columns:repeat(3,1fr);}
+  .rc{padding:16px 4px;}
+  .rf{font-size:18px;margin-bottom:4px;}
+  .rn{font-size:7.5px;letter-spacing:.1em;}
+  .rnum{font-size:15px;}
+}
+@media(max-width:360px){
+  .rg{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ─── FEATURES ─── */
+@media(max-width:600px){
+  .feat-sec{padding:48px 0;}
+  .feat-in{padding:0 16px;}
+  .fg{gap:0;}
+  .fc{padding:24px 16px;}
+  .fi{font-size:22px;margin-bottom:12px;}
+  .ft{font-size:19px;}
+  .fd{font-size:13px;}
+}
+
+/* ─── CTA ─── */
+@media(max-width:600px){
+  .cta-sec{padding:64px 16px;}
+  .cta-h{font-size:clamp(30px,8vw,48px);}
+  .btn-cta{padding:14px 32px;font-size:10px;width:100%;max-width:280px;display:block;margin:0 auto;}
+}
+
+/* ─── FOOTER ─── */
+@media(max-width:600px){
+  footer{flex-direction:column;align-items:center;text-align:center;gap:14px;padding:20px 16px;}
+  .flinks{flex-wrap:wrap;justify-content:center;gap:12px;}
+  footer > div{flex-direction:column;align-items:center;gap:10px;}
+}
+
+/* ─── EXPLORE PAGE (game) — overall layout ─── */
+@media(max-width:600px){
+  .exp-page{padding:70px 0 60px;}
+  .exp-hero{padding:0 16px 36px;}
+  .exp-hero .sec-h{font-size:clamp(28px,7vw,44px);}
+  .exp-hero .sec-sub{font-size:13px;padding:0 4px;}
+}
+
+/* ─── TOKEN HUD: stack on mobile ─── */
+@media(max-width:600px){
+  .token-hud{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:0;
+    margin-top:24px;
+    max-width:100%;
+  }
+  .hud-card{min-width:0;width:100%;padding:12px 14px;gap:8px;}
+  .hud-icon{font-size:18px;}
+  .hud-val{font-size:22px;}
+  .hud-lbl{font-size:7px;}
+  /* Buttons span full row */
+  .hud-btn{
+    grid-column:span 1;
+    width:100%;
+    padding:12px 10px;
+    font-size:8.5px;
+    text-align:center;
+    display:flex;align-items:center;justify-content:center;
+    min-height:44px;
+  }
+}
+
+/* ─── QUEST BAR: mobile ─── */
+@media(max-width:600px){
+  .quest-bar{
+    padding:10px 12px;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+    overflow-x:unset;
+  }
+  .quest-item{
+    flex:1 1 calc(50% - 3px);
+    min-width:0;
+    padding:9px 10px;
+    min-height:44px;
+  }
+  .qi-text{font-size:7.5px;letter-spacing:.06em;}
+  .qi-reward{font-size:7px;}
+  .qi-icon{font-size:14px;}
+}
+
+/* ─── CONTINENT TABS: mobile ─── */
+@media(max-width:600px){
+  .continent-nav{padding:0 8px;}
+  .cont-tab{padding:10px 10px;font-size:7.5px;letter-spacing:.1em;}
+}
+
+/* ─── STORY GRID: mobile single column ─── */
+@media(max-width:600px){
+  .story-grid-wrap{padding:16px 12px;}
+  .story-cards{grid-template-columns:1fr;}
+  .country-group{margin-bottom:32px;}
+  .country-head{gap:8px;margin-bottom:14px;}
+  .ch-flag{font-size:18px;}
+  .ch-name{font-size:18px;}
+  .sc-title{font-size:15px;line-height:1.25;}
+  .sc-excerpt{font-size:12px;}
+  .sc-em{font-size:24px;}
+}
+
+/* ─── LEADERBOARD: mobile stack ─── */
+@media(max-width:600px){
+  .leaderboard-wrap{padding:0 12px 40px;}
+  .lb-grid{grid-template-columns:1fr;gap:16px;}
+  .lb-row{padding:9px 12px;gap:8px;}
+  .lb-name{font-size:8px;}
+  .lb-val{font-size:13px;}
+  .lb-rank{font-size:15px;}
+  .lb-avatar{width:24px;height:24px;font-size:12px;}
+}
+
+/* ─── BADGES: mobile ─── */
+@media(max-width:600px){
+  .badges-wrap{padding:0 12px 36px;}
+  .badges-grid{grid-template-columns:repeat(3,1fr);gap:6px;}
+  .badge-card{padding:14px 8px;}
+  .bc-icon{font-size:20px;}
+  .bc-name{font-size:7px;letter-spacing:.1em;}
+  .bc-desc{font-size:9.5px;line-height:1.4;}
+}
+@media(max-width:360px){
+  .badges-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ─── STORY PAGE: mobile layout ─── */
+@media(max-width:600px){
+  .story-hero{min-height:50svh;max-height:55svh;}
+  .sh-content{padding:24px 16px 32px;}
+  .sh-title{font-size:clamp(24px,7vw,42px);}
+  .sh-tagline{font-size:13px;}
+  .story-body{
+    grid-template-columns:1fr;
+    gap:0;
+    padding:24px 16px 48px;
+  }
+  /* Sidebar: only show action/meta cards, hide decorative */
+  .story-sidebar{order:-1;}
+  .ss-card:not(.ss-actions):not(.ss-meta-card){display:none;}
+  .ss-card{margin-bottom:10px;}
+  /* Audio bar */
+  .audio-bar{padding:10px 14px;gap:8px;top:54px;}
+  .ab-vol{display:none;}
+  .ab-title{font-size:8px;}
+  .ab-time{font-size:7px;}
+  /* Story text */
+  .story-p{font-size:16px;line-height:1.85;}
+  .drop-cap::first-letter{font-size:4.2em;}
+  .pq-text{font-size:clamp(17px,4vw,22px);}
+  /* Story illustration */
+  .si-box{height:200px;}
+  /* Related */
+  .rel-grid{grid-template-columns:1fr;}
+  .related-sec{padding:36px 16px 56px;}
+}
+
+/* ─── STORY GAME HUD: mobile ─── */
+@media(max-width:600px){
+  .story-game-hud{padding:0 8px;top:54px;}
+  .sgh-item{padding:8px 10px;font-size:7.5px;gap:4px;}
+  .sgh-icon{font-size:11px;}
+  .xp-bar-outer{width:60px;}
+}
+
+/* ─── PUZZLE SYSTEM: mobile ─── */
+@media(max-width:600px){
+  .puzzle-card{margin:20px 0 0;border-left:none;border-right:none;}
+  .puzzle-header{padding:12px 14px;gap:8px;}
+  .puzzle-icon{font-size:18px;}
+  .puzzle-q{font-size:16px;}
+  .puzzle-opts{padding:10px 14px;gap:5px;}
+  .puzzle-opt{padding:12px 12px;gap:10px;min-height:48px;}
+  .opt-text{font-size:13px;}
+  .pr-body{font-size:13px;line-height:1.65;}
+  .pr-title{font-size:17px;}
+  .pr-icon{font-size:22px;}
+  .btn-next-chapter{padding:15px 12px;font-size:9px;min-height:50px;}
+}
+
+/* ─── CHAPTER TABS: mobile ─── */
+@media(max-width:600px){
+  .chapter-nav{padding:0 6px;}
+  .chap-tab{padding:9px 10px;font-size:7px;letter-spacing:.1em;gap:4px;min-height:38px;}
+  .chap-dot{width:4px;height:4px;}
+}
+
+/* ─── STORY END SCREEN: mobile ─── */
+@media(max-width:600px){
+  .story-end{padding:28px 14px 60px;}
+  .se-icon{font-size:40px;margin-bottom:14px;}
+  .se-title{font-size:clamp(22px,6vw,36px);}
+  .se-stat{padding:12px 14px;min-width:80px;}
+  .se-stat-val{font-size:26px;}
+}
+
+/* ─── MODALS: full-width bottom sheet ─── */
+@media(max-width:600px){
+  .modal-overlay{align-items:flex-end;padding:0;}
+  .modal-box{
+    max-width:100%;width:100%;
+    border-radius:0;max-height:88vh;
+    border-left:none;border-right:none;border-bottom:none;
+  }
+  .modal-head{padding:18px 18px 0;}
+  .modal-body{padding:14px 18px 28px;}
+  .token-packages{grid-template-columns:1fr 1fr;gap:6px;}
+  .tok-pkg{padding:12px 10px;}
+  .tok-pkg-amount{font-size:22px;}
+  .tok-pkg-icon{font-size:18px;margin-bottom:6px;}
+  .tok-pkg-price{font-size:10px;}
+  .btn-confirm{padding:15px;font-size:9.5px;min-height:50px;}
+  .btn-secondary{padding:12px;font-size:9.5px;min-height:46px;}
+}
+
+/* ─── ACHIEVEMENT TOAST: full-width mobile ─── */
+@media(max-width:600px){
+  .achieve-toast{
+    bottom:0;right:0;left:0;
+    max-width:100%;
+    border-left:none;border-right:none;border-bottom:none;
+    transform:translateY(100%);
+    padding:14px 18px;gap:12px;
+  }
+  .achieve-toast.show{transform:translateY(0);}
+  .at-icon{font-size:22px;}
+  .at-name{font-size:14px;}
+}
+
+/* ─── ROADMAP: mobile ─── */
+@media(max-width:600px){
+  .roadmap-page{padding:72px 12px 48px;}
+  .rm-phase{grid-template-columns:48px 1px 1fr;gap:0 10px;}
+  .rm-phase::before{left:48px;}
+  .rm-dot{left:40px;top:20px;width:13px;height:13px;font-size:7px;}
+  .rm-timing{padding:16px 0;}
+  .rm-timing-val{font-size:7px;letter-spacing:.08em;}
+  .rm-phase-title{font-size:18px;}
+  .rm-phase-sub{font-size:12px;}
+  .rm-content{padding:12px 0 24px;}
+  .rm-item{padding:9px 10px;gap:7px;}
+  .ri-title{font-size:8px;letter-spacing:.08em;}
+  .ri-desc{font-size:11.5px;line-height:1.55;}
+  .rm-phase-badge{font-size:7px;padding:3px 7px;}
+  .rm-phase-badge .badge-live,.rm-phase-badge .badge-next,.rm-phase-badge .badge-future{font-size:7px;}
+}
+
+/* ─── ABOUT / FOOTER STRIP ─── */
+@media(max-width:600px){
+  .about-strip{padding:40px 16px 32px;margin-top:48px;}
+  .about-text{font-size:13.5px;}
+  .credit-row{gap:7px;}
+}
+
+/* ─── FRAGMENTS SIDEBAR: mobile ─── */
+@media(max-width:600px){
+  .ss-fragments{gap:5px;}
+  .frag-chip{width:28px;height:28px;font-size:12px;}
+}
+
+/* ─── iOS safe-area padding ─── */
+@supports(padding-bottom:env(safe-area-inset-bottom)){
+  .modal-box{padding-bottom:max(24px,env(safe-area-inset-bottom));}
+  .achieve-toast{padding-bottom:calc(14px + env(safe-area-inset-bottom));}
+  .nav{padding-top:max(12px,env(safe-area-inset-top));}
+}
+
+/* ─── Prevent horizontal overflow ─── */
+body{max-width:100vw;overflow-x:hidden;}
+.hero,.ex-sec,.reg-sec,.feat-sec,.cta-sec,.about-strip{overflow:hidden;}
+
+/* ─── Better tap targets across the board ─── */
+@media(pointer:coarse){
+  .nav-links a,.flinks a,.btn-nav,.btn-cta,.btn-regen,.btn-share{
+    min-height:44px;display:inline-flex;align-items:center;
+  }
+  .rc{min-height:64px;}
+  .ec{-webkit-tap-highlight-color:transparent;}
+  .tok-pkg{min-height:80px;}
+}
+
+/* ─── Sec labels: smaller on mobile ─── */
+@media(max-width:600px){
+  .sec-lbl{font-size:9px;letter-spacing:.2em;}
+  .sec-h{font-size:clamp(26px,7vw,44px);}
+  .sec-sub{font-size:14px;}
 }
 </style>
 </head>
