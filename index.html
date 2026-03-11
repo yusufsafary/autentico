@@ -3,1186 +3,874 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autentico — Plagiarism Detection for Creative Works</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Autentico — AI Folklore Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=DM+Mono:wght@300;400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --surface2: #181818;
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --gold-dim: rgba(201,168,76,0.15);
-    --text: #f0ece4;
-    --muted: #7a7570;
-    --border: rgba(201,168,76,0.2);
-    --radius: 16px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 40px;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-  }
-
-  .logo span { color: var(--text); }
-
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.3s;
-  }
-
-  nav a:hover { color: var(--gold); }
-
-  .nav-cta {
-    background: var(--gold);
-    color: #0a0a0a !important;
-    padding: 8px 20px;
-    border-radius: 100px;
-    font-weight: 500;
-    transition: all 0.3s !important;
-  }
-
-  .nav-cta:hover {
-    background: var(--gold-light) !important;
-    color: #0a0a0a !important;
-    transform: translateY(-1px);
-  }
-
-  .nav-links { display: flex; gap: 32px; align-items: center; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 24px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -200px; left: 50%; transform: translateX(-50%);
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--gold-dim);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 32px;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
-    animation: fadeUp 0.8s ease 0.1s both;
-  }
-
-  h1 em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: var(--muted);
-    max-width: 500px;
-    margin: 0 auto 48px;
-    animation: fadeUp 0.8s ease 0.2s both;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  .btn-primary {
-    background: var(--gold);
-    color: #0a0a0a;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
-    letter-spacing: 0.02em;
-  }
-
-  .btn-primary:hover {
-    background: var(--gold-light);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(201,168,76,0.3);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 14px 32px;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* STATS */
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .stat-item {
-    flex: 1;
-    max-width: 200px;
-    text-align: center;
-    padding: 32px 24px;
-    border-right: 1px solid var(--border);
-  }
-
-  .stat-item:last-child { border-right: none; }
-
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--gold);
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  /* SECTION */
-  section { padding: 100px 24px; }
-
-  .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    max-width: 480px;
-    font-size: 1rem;
-  }
-
-  .container { max-width: 1100px; margin: 0 auto; }
-
-  /* FEATURES */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2px;
-    margin-top: 64px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .feature-card {
-    background: var(--surface);
-    padding: 40px 32px;
-    transition: background 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .feature-card:hover { background: var(--surface2); }
-  .feature-card:hover::before { opacity: 1; }
-
-  .feature-icon {
-    width: 48px; height: 48px;
-    background: var(--gold-dim);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 24px;
-  }
-
-  .feature-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-
-  .feature-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
-
-  /* HOW IT WORKS */
-  .how-section { background: var(--surface); }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0;
-    margin-top: 64px;
-    position: relative;
-  }
-
-  .step {
-    padding: 32px;
-    position: relative;
-    text-align: center;
-  }
-
-  .step-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 700;
-    color: var(--gold-dim);
-    line-height: 1;
-    margin-bottom: 16px;
-    border: 1px solid var(--border);
-    width: 70px; height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    font-size: 1.4rem;
-    color: var(--gold);
-    background: var(--gold-dim);
-  }
-
-  .step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .step-desc { color: var(--muted); font-size: 0.85rem; }
-
-  /* DEMO */
-  .demo-section { background: var(--bg); }
-
-  .demo-wrapper {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-top: 48px;
-  }
-
-  .demo-header {
-    padding: 20px 28px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .demo-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-  }
-
-  .demo-dot:nth-child(1) { background: #ff5f57; }
-  .demo-dot:nth-child(2) { background: #febc2e; }
-  .demo-dot:nth-child(3) { background: #28c840; }
-
-  .demo-title-bar {
-    flex: 1;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  .demo-body { padding: 28px; }
-
-  .demo-tabs {
-    display: flex;
-    gap: 4px;
-    background: var(--bg);
-    border-radius: 100px;
-    padding: 4px;
-    margin-bottom: 24px;
-    width: fit-content;
-  }
-
-  .tab-btn {
-    padding: 8px 20px;
-    border-radius: 100px;
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .tab-btn.active {
-    background: var(--gold);
-    color: #0a0a0a;
-    font-weight: 500;
-  }
-
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
-  .input-area {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    resize: vertical;
-    min-height: 140px;
-    outline: none;
-    transition: border-color 0.2s;
-    line-height: 1.6;
-  }
-
-  .input-area:focus { border-color: var(--gold); }
-  .input-area::placeholder { color: var(--muted); }
-
-  .upload-zone {
-    border: 1px dashed var(--border);
-    border-radius: 12px;
-    padding: 48px 24px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: var(--bg);
-  }
-
-  .upload-zone:hover {
-    border-color: var(--gold);
-    background: var(--gold-dim);
-  }
-
-  .upload-icon { font-size: 2rem; margin-bottom: 12px; }
-  .upload-text { color: var(--muted); font-size: 0.9rem; }
-  .upload-text strong { color: var(--gold); }
-
-  .demo-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .demo-hint { font-size: 0.78rem; color: var(--muted); }
-
-  .analyze-btn {
-    background: var(--gold);
-    color: #0a0a0a;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .analyze-btn:hover:not(:disabled) {
-    background: var(--gold-light);
-    transform: translateY(-1px);
-  }
-
-  .analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  /* RESULT */
-  .result-box {
-    margin-top: 24px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    display: none;
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .result-box.visible { display: block; }
-
-  .result-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .result-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-  }
-
-  .score-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .score-bar-wrap {
-    width: 120px;
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 100px;
-    overflow: hidden;
-  }
-
-  .score-bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    transition: width 1s ease;
-    background: linear-gradient(90deg, #22c55e, #86efac);
-  }
-
-  .score-bar-fill.medium {
-    background: linear-gradient(90deg, #f59e0b, #fcd34d);
-  }
-
-  .score-bar-fill.low {
-    background: linear-gradient(90deg, #ef4444, #fca5a5);
-  }
-
-  .score-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .result-content {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.8;
-    white-space: pre-wrap;
-  }
-
-  .loading-dots {
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-  }
-
-  .loading-dots span {
-    width: 5px; height: 5px;
-    background: var(--gold);
-    border-radius: 50%;
-    animation: bounce 1.2s infinite;
-  }
-
-  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes bounce {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40% { transform: scale(1); opacity: 1; }
-  }
-
-  /* TESTIMONIALS */
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-    margin-top: 48px;
-  }
-
-  .testi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-  }
-
-  .testi-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin-bottom: 20px;
-    color: var(--text);
-  }
-
-  .testi-author {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .testi-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: var(--gold-dim);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-  }
-
-  .testi-name {
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  .testi-role {
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  /* CTA */
-  .cta-section {
-    background: var(--surface);
-    text-align: center;
-  }
-
-  .cta-inner {
-    background: linear-gradient(135deg, var(--gold-dim), transparent);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 80px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-inner::before {
-    content: 'A';
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20rem;
-    font-weight: 700;
-    color: rgba(201,168,76,0.04);
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    line-height: 1;
-  }
-
-  /* FOOTER */
-  footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 40px 24px;
-    text-align: center;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 12px;
-  }
-
-  footer p {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { gap: 16px; }
-    nav a:not(.nav-cta) { display: none; }
-
-    .stats { flex-wrap: wrap; }
-    .stat-item { flex: 1; min-width: 100px; border-right: none; border-bottom: 1px solid var(--border); }
-    .stat-item:last-child { border-bottom: none; }
-
-    section { padding: 64px 20px; }
-
-    .demo-body { padding: 20px; }
-
-    .cta-inner { padding: 48px 24px; }
-  }
-
-  @media (max-width: 480px) {
-    h1 { font-size: 2.6rem; }
-    .hero-actions { flex-direction: column; width: 100%; }
-    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
-  }
+/* ─── TOKENS ─────────────────────────────── */
+:root{
+  --bg:#0C0905; --surf:#17120A; --surf2:#211A10;
+  --bdr:rgba(210,170,90,.13); --bdr2:rgba(210,170,90,.22);
+  --cream:#EFE7D2; --cream2:#B8A880;
+  --gold:#C8922A; --gold2:#E8B84B;
+  --terra:#C4622D; --sage:#6B8C6E; --muted:#6B5F4A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:'Crimson Pro',Georgia,serif;font-size:18px;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ─── PAGE SWITCH ─────────────────────────── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ─── GRAIN ──────────────────────────────── */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");}
+
+/* ─── CURSOR (desktop only) ──────────────── */
+.cur,.cur-ring{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cur{width:8px;height:8px;background:var(--gold);border-radius:50%;mix-blend-mode:screen;}
+.cur-ring{width:32px;height:32px;border:1px solid rgba(200,146,42,.45);border-radius:50%;z-index:9998;transition:all .1s ease;}
+
+/* ─── NAV ────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,border-color .3s;}
+.nav.scrolled{background:rgba(12,9,5,.96);border-bottom:1px solid var(--bdr);backdrop-filter:blur(16px);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:9px;}
+.logo-gem{width:14px;height:14px;background:var(--gold);transform:rotate(45deg);flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream2);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--gold2);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.btn-nav{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);background:transparent;padding:9px 18px;transition:background .2s,color .2s;text-decoration:none;white-space:nowrap;cursor:pointer;}
+.btn-nav:hover{background:var(--gold);color:var(--bg);}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;-webkit-tap-highlight-color:transparent;}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--cream);transition:all .3s;}
+.nav-drawer{display:none;position:fixed;inset:0;background:rgba(12,9,5,.98);z-index:490;flex-direction:column;align-items:center;justify-content:center;gap:28px;}
+.nav-drawer.open{display:flex;}
+.nav-drawer a{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream2);text-decoration:none;padding:10px 0;cursor:pointer;}
+.nav-drawer .btn-nav{margin-top:8px;padding:14px 44px;font-size:11px;}
+
+/* ─── SHARED UTILS ───────────────────────── */
+.sec-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.sec-lbl::before{content:'';width:24px;height:1px;background:var(--gold);display:block;}
+.sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,62px);font-weight:300;line-height:1.08;color:var(--cream);margin-bottom:12px;}
+.sec-h em{font-style:italic;color:var(--gold2);}
+.sec-sub{font-size:16px;color:var(--cream2);font-weight:300;line-height:1.8;max-width:440px;}
+
+/* ══════════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════════ */
+
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:88px 20px 56px;position:relative;overflow:hidden;}
+.h-glow{position:absolute;top:-5%;left:50%;transform:translateX(-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(200,146,42,.08) 0%,transparent 65%);pointer-events:none;}
+.h-glow2{position:absolute;bottom:-10%;right:5%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(196,98,45,.06) 0%,transparent 65%);pointer-events:none;}
+.h-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(210,170,90,.05);pointer-events:none;}
+.h-ring1{width:580px;height:580px;}
+.h-ring2{width:880px;height:880px;}
+
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px;justify-content:center;opacity:0;animation:fadeUp .7s ease .1s forwards;}
+.ey-ln{width:22px;height:1px;background:var(--gold);}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,8.5vw,108px);font-weight:300;line-height:1.03;color:var(--cream);margin-bottom:20px;opacity:0;animation:fadeUp .8s ease .22s forwards;}
+.hero-title em{font-style:italic;color:var(--gold2);}
+.hero-sub{font-size:clamp(15px,2.5vw,18px);font-weight:300;line-height:1.8;color:var(--cream2);max-width:520px;margin:0 auto 40px;opacity:0;animation:fadeUp .8s ease .36s forwards;}
+
+/* PROMPT BOX */
+.pbox{width:100%;max-width:720px;background:var(--surf);border:1px solid var(--bdr);overflow:hidden;opacity:0;animation:fadeUp .8s ease .5s forwards;box-shadow:0 32px 80px rgba(0,0,0,.55);}
+
+/* Main 2-field row */
+.p-main{padding:18px 18px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.sg{display:flex;flex-direction:column;gap:5px;}
+.sl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+.cs{background:var(--surf2);border:1px solid var(--bdr);color:var(--cream);font-family:'Crimson Pro',serif;font-size:15px;padding:11px 12px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5'%3E%3Cpath d='M0 0l4.5 5L9 0z' fill='%23C8922A'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;width:100%;cursor:pointer;transition:border-color .2s;}
+.cs:focus{outline:none;border-color:var(--gold);}
+.cs option{background:var(--surf2);}
+
+/* Advanced toggle */
+.p-adv-toggle{margin:12px 18px 0;display:flex;align-items:center;gap:8px;cursor:pointer;width:fit-content;-webkit-tap-highlight-color:transparent;border:none;background:none;padding:0;}
+.p-adv-toggle span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+.p-adv-toggle:hover span,.p-adv-toggle:active span{color:var(--gold);}
+.adv-arrow{font-size:10px;color:var(--muted);transition:transform .25s,color .2s;display:inline-block;}
+.p-adv-toggle.open .adv-arrow{transform:rotate(180deg);}
+.p-adv-toggle.open span{color:var(--gold);}
+
+/* Advanced panel */
+.p-advanced{display:none;padding:10px 18px 0;display:none;}
+.p-advanced.open{display:block;}
+.p-adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:2px;}
+
+/* Textarea */
+.p-ta-w{padding:12px 18px 0;}
+.p-ta{width:100%;background:var(--surf2);border:1px solid var(--bdr);color:var(--cream);font-family:'Crimson Pro',serif;font-size:15px;line-height:1.6;padding:10px 13px;resize:none;height:60px;transition:border-color .2s;}
+.p-ta::placeholder{color:var(--muted);font-style:italic;}
+.p-ta:focus{outline:none;border-color:var(--gold);}
+
+/* Footer */
+.p-foot{padding:12px 18px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.p-hint{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:.1em;display:flex;align-items:center;gap:7px;}
+.h-dot{width:5px;height:5px;border-radius:50%;background:var(--sage);flex-shrink:0;}
+.btn-gen{background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:13px 28px;border:none;cursor:pointer;transition:background .2s,transform .15s;display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.btn-gen:hover{background:var(--gold2);}
+.btn-gen:active{background:var(--gold2);transform:scale(.98);}
+@keyframes spin2{to{transform:rotate(360deg);}}
+.sp{display:none;width:11px;height:11px;border:1.5px solid rgba(12,9,5,.3);border-top-color:var(--bg);border-radius:50%;animation:spin2 .7s linear infinite;}
+.btn-gen.loading .sp{display:block;}
+.btn-gen.loading .ba{display:none;}
+
+/* Tags */
+.tags{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:20px;opacity:0;animation:fadeUp .8s ease .65s forwards;justify-content:center;}
+.tl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.tag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream2);border:1px solid var(--bdr);padding:7px 12px;cursor:pointer;transition:border-color .2s,color .2s;display:inline-flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.tag:hover,.tag:active{border-color:var(--gold);color:var(--gold2);}
+
+/* MARQUEE */
+.mqw{background:var(--surf);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:12px 0;overflow:hidden;}
+.mq{display:flex;animation:mq 30s linear infinite;white-space:nowrap;}
+.mi{display:inline-flex;align-items:center;gap:16px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 24px;flex-shrink:0;}
+.ms{color:var(--gold);font-size:8px;}
+
+/* HOW IT WORKS */
+.how-sec{padding:100px 48px;max-width:1200px;margin:0 auto;}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:56px;background:var(--bdr);}
+.how-card{background:var(--surf);padding:44px 32px;position:relative;overflow:hidden;transition:background .3s;}
+.how-card:hover{background:var(--surf2);}
+.hw-n{font-family:'Cormorant Garamond',serif;font-size:88px;font-weight:300;color:rgba(200,146,42,.055);line-height:1;position:absolute;top:8px;right:16px;}
+.hw-ic{font-size:32px;margin-bottom:20px;display:block;}
+.hw-t{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--cream);margin-bottom:10px;}
+.hw-d{font-size:14px;color:var(--cream2);line-height:1.75;font-weight:300;}
+
+/* EXAMPLES */
+.ex-sec{background:var(--surf);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:90px 48px;}
+.ex-in{max-width:1200px;margin:0 auto;}
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:56px;background:var(--bdr);}
+.ec{background:var(--bg);overflow:hidden;transition:transform .3s;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.ec:hover{transform:translateY(-4px);z-index:2;}
+.ec:active{transform:scale(.98);}
+.ei{height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:60px;}
+.i1{background:linear-gradient(155deg,#1A1A08,#3A3010,#706020);}
+.i2{background:linear-gradient(155deg,#0A1520,#103040,#1E5F78);}
+.i3{background:linear-gradient(155deg,#1A0A08,#401010,#7D2020);}
+.i4{background:linear-gradient(155deg,#0A1A0A,#103010,#1E6020);}
+.i5{background:linear-gradient(155deg,#100A1A,#201030,#4E1E66);}
+.i6{background:linear-gradient(155deg,#1A1005,#3A2510,#6E4E28);}
+.iov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,9,5,.85) 0%,transparent 55%);}
+.iem{position:relative;z-index:1;opacity:.45;}
+.eb{padding:20px 20px 14px;}
+.em{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.ec-country{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
+.ec-dot{width:3px;height:3px;border-radius:50%;background:var(--muted);}
+.ec-type{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.et{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--cream);margin-bottom:7px;line-height:1.3;}
+.ee{font-size:13px;color:var(--cream2);line-height:1.7;font-weight:300;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.ef{padding:11px 20px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.pills{display:flex;gap:5px;}
+.pill{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--bdr);color:var(--cream2);}
+.pill.on{border-color:var(--gold);color:var(--gold);}
+.earr{font-size:14px;color:var(--muted);transition:color .2s,transform .2s;}
+.ec:hover .earr{color:var(--gold);transform:translateX(3px);}
+
+/* REGIONS */
+.reg-sec{padding:100px 48px;max-width:1200px;margin:0 auto;}
+.rg{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-top:48px;background:var(--bdr);}
+.rc{background:var(--surf);padding:24px 10px;text-align:center;cursor:pointer;transition:background .2s;-webkit-tap-highlight-color:transparent;}
+.rc:hover,.rc:active{background:var(--surf2);}
+.rf{font-size:24px;margin-bottom:7px;display:block;}
+.rn{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream2);transition:color .2s;display:block;}
+.rc:hover .rn,.rc:active .rn{color:var(--gold2);}
+.rnum{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--gold);display:block;margin-top:5px;}
+
+/* FEATURES */
+.feat-sec{background:var(--surf);border-top:1px solid var(--bdr);padding:100px 48px;}
+.feat-in{max-width:1200px;margin:0 auto;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:56px;background:var(--bdr);}
+.fc{background:var(--bg);padding:46px 40px;}
+.fi{font-size:28px;margin-bottom:20px;display:block;}
+.ft{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--cream);margin-bottom:12px;}
+.fd{font-size:14px;color:var(--cream2);line-height:1.8;font-weight:300;}
+.ftag{display:inline-block;margin-top:16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,146,42,.3);padding-bottom:2px;}
+
+/* CTA */
+.cta-sec{padding:140px 24px;text-align:center;position:relative;overflow:hidden;}
+.cta-sec::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(200,146,42,.07) 0%,transparent 65%);pointer-events:none;}
+.cta-h{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,6vw,88px);font-weight:300;line-height:1.05;color:var(--cream);margin-bottom:20px;position:relative;}
+.cta-h em{font-style:italic;color:var(--gold2);}
+.cta-p{font-size:16px;color:var(--cream2);font-weight:300;line-height:1.8;max-width:420px;margin:0 auto 40px;position:relative;}
+.btn-cta{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;background:var(--gold);color:var(--bg);padding:16px 48px;text-decoration:none;cursor:pointer;transition:background .2s,transform .15s;display:inline-block;position:relative;-webkit-tap-highlight-color:transparent;}
+.btn-cta:hover{background:var(--gold2);}
+.btn-cta:active{background:var(--gold2);transform:scale(.98);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.fl{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cream2);text-decoration:none;}
+.fc2{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;}
+.flinks{display:flex;gap:22px;list-style:none;}
+.flinks a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.flinks a:hover{color:var(--gold);}
+
+/* ══════════════════════════════════════════
+   STORY PAGE
+══════════════════════════════════════════ */
+
+/* Story hero — full bleed illustration */
+.story-hero{position:relative;height:100svh;min-height:500px;max-height:800px;overflow:hidden;display:flex;align-items:flex-end;}
+.sh-bg{position:absolute;inset:0;background:linear-gradient(155deg,#0E1A24 0%,#0A2030 30%,#143850 60%,#1A5870 100%);}
+.sh-pattern{position:absolute;inset:0;opacity:.08;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='25' fill='none' stroke='%23EFE7D2' stroke-width='.6'/%3E%3Ccircle cx='30' cy='30' r='15' fill='none' stroke='%23EFE7D2' stroke-width='.4'/%3E%3Cline x1='5' y1='30' x2='55' y2='30' stroke='%23EFE7D2' stroke-width='.3'/%3E%3Cline x1='30' y1='5' x2='30' y2='55' stroke='%23EFE7D2' stroke-width='.3'/%3E%3Cline x1='12' y1='12' x2='48' y2='48' stroke='%23EFE7D2' stroke-width='.2'/%3E%3Cline x1='48' y1='12' x2='12' y2='48' stroke='%23EFE7D2' stroke-width='.2'/%3E%3C/svg%3E");}
+/* Floating spirit orbs */
+.sh-orb{position:absolute;border-radius:50%;filter:blur(40px);animation:orbFloat 8s ease-in-out infinite;}
+.sh-orb1{width:300px;height:300px;background:rgba(30,95,120,.4);top:10%;left:15%;animation-delay:0s;}
+.sh-orb2{width:200px;height:200px;background:rgba(200,146,42,.15);top:30%;right:10%;animation-delay:-3s;}
+.sh-orb3{width:180px;height:180px;background:rgba(196,98,45,.15);bottom:20%;left:40%;animation-delay:-5s;}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-20px) scale(1.05);}}
+/* Central illustration art */
+.sh-art{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(100px,18vw,200px);opacity:.18;user-select:none;animation:artFloat 10s ease-in-out infinite;}
+@keyframes artFloat{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-52%) scale(1.04);}}
+.sh-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,9,5,1) 0%,rgba(12,9,5,.5) 40%,transparent 70%);}
+.sh-content{position:relative;z-index:2;padding:40px 28px 44px;width:100%;max-width:900px;margin:0 auto;}
+.sh-meta{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.sh-country{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(200,146,42,.12);border:1px solid rgba(200,146,42,.25);padding:4px 12px;}
+.sh-type{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream2);}
+.sh-sep{color:var(--muted);}
+.sh-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,6vw,72px);font-weight:300;line-height:1.05;color:var(--cream);margin-bottom:16px;}
+.sh-title em{font-style:italic;color:var(--gold2);}
+.sh-tagline{font-size:clamp(14px,2vw,17px);color:var(--cream2);font-weight:300;font-style:italic;line-height:1.6;max-width:560px;}
+
+/* Audio player bar */
+.audio-bar{background:var(--surf);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:14px 28px;display:flex;align-items:center;gap:16px;position:sticky;top:58px;z-index:100;}
+.ab-play{width:36px;height:36px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;-webkit-tap-highlight-color:transparent;}
+.ab-play:hover{background:var(--gold2);}
+.ab-play svg{width:14px;height:14px;fill:var(--bg);}
+.ab-info{flex:1;min-width:0;}
+.ab-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ab-track{margin-top:6px;display:flex;align-items:center;gap:10px;}
+.ab-bar{flex:1;height:2px;background:rgba(210,170,90,.15);position:relative;cursor:pointer;}
+.ab-prog{height:100%;background:var(--gold);width:35%;transition:width .5s linear;}
+.ab-time{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.1em;white-space:nowrap;}
+.ab-vol{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ab-vol svg{width:14px;height:14px;fill:var(--muted);}
+.ab-vol-bar{width:60px;height:2px;background:rgba(210,170,90,.15);}
+.ab-vol-fill{height:100%;background:var(--muted);width:70%;}
+
+/* Story body layout */
+.story-body{max-width:1100px;margin:0 auto;padding:60px 28px 100px;display:grid;grid-template-columns:1fr 320px;gap:60px;align-items:start;}
+
+/* Story text */
+.story-text{}
+.story-chapter{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.story-chapter::after{content:'';flex:1;height:1px;background:var(--bdr);}
+.drop-cap::first-letter{font-family:'Cormorant Garamond',serif;font-size:5.2em;font-weight:600;float:left;line-height:.75;margin:0.08em 0.1em 0 0;color:var(--gold2);}
+.story-p{font-size:clamp(16px,2.2vw,19px);line-height:1.9;color:var(--cream);font-weight:300;margin-bottom:28px;}
+.story-p + .story-p{text-indent:1.5em;}
+
+/* Pull quote */
+.pull-quote{border-left:2px solid var(--gold);padding:20px 0 20px 28px;margin:40px 0;position:relative;}
+.pull-quote::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--gold);opacity:.25;position:absolute;top:-16px;left:20px;line-height:1;}
+.pq-text{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,28px);font-style:italic;font-weight:300;color:var(--cream2);line-height:1.5;}
+
+/* Illustration break */
+.story-illus{margin:48px 0;position:relative;}
+.si-box{height:280px;border-radius:1px;overflow:hidden;position:relative;background:linear-gradient(155deg,#0A1520,#103040,#1E5F78);display:flex;align-items:center;justify-content:center;}
+.si-em{font-size:80px;opacity:.25;}
+.si-ov2{position:absolute;inset:0;background:linear-gradient(135deg,rgba(12,9,5,.6) 0%,transparent 50%,rgba(12,9,5,.4) 100%);}
+.si-caption{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:12px;}
+
+/* Sidebar */
+.story-sidebar{}
+.ss-card{background:var(--surf);border:1px solid var(--bdr);padding:24px;margin-bottom:16px;}
+.ss-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--bdr);}
+.ss-body{font-size:14px;color:var(--cream2);line-height:1.75;font-weight:300;}
+.ss-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+.ss-tag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border:1px solid var(--bdr);color:var(--cream2);}
+.ss-stat{display:flex;justify-content:space-between;margin-bottom:10px;}
+.ss-stat:last-child{margin-bottom:0;}
+.ss-stat-l{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.ss-stat-r{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--cream);}
+/* Regen button */
+.btn-regen{width:100%;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:13px 16px;cursor:pointer;transition:background .2s,color .2s;margin-top:6px;-webkit-tap-highlight-color:transparent;}
+.btn-regen:hover,.btn-regen:active{background:var(--gold);color:var(--bg);}
+/* Share */
+.share-row{display:flex;gap:8px;margin-top:6px;}
+.btn-share{flex:1;background:var(--surf2);border:1px solid var(--bdr);color:var(--cream2);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:10px 8px;cursor:pointer;transition:border-color .2s,color .2s;text-align:center;-webkit-tap-highlight-color:transparent;}
+.btn-share:hover{border-color:var(--gold2);color:var(--gold2);}
+
+/* Related stories */
+.related-sec{background:var(--surf);border-top:1px solid var(--bdr);padding:64px 28px 80px;}
+.related-in{max-width:1100px;margin:0 auto;}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:40px;background:var(--bdr);}
+
+/* ─── ANIMATIONS ──────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ─── RESPONSIVE ──────────────────────────── */
+@media(max-width:960px){
+  .nav-links,.btn-nav{display:none;}
+  .nav-burger{display:flex;}
+  .how-sec,.reg-sec,.feat-sec,.ex-sec,.cta-sec{padding-left:20px;padding-right:20px;}
+  .how-sec,.reg-sec{padding-top:72px;padding-bottom:72px;}
+  .feat-sec{padding-top:72px;padding-bottom:72px;}
+  .how-grid{grid-template-columns:1fr;}
+  .ex-grid{grid-template-columns:1fr 1fr;}
+  .rg{grid-template-columns:repeat(4,1fr);}
+  .fg{grid-template-columns:1fr;}
+  .story-body{grid-template-columns:1fr;gap:40px;}
+  .story-sidebar{order:-1;}
+  .ss-card{display:none;}
+  .ss-card.ss-actions{display:block;}
+  .ss-card.ss-meta-card{display:block;}
+  .rel-grid{grid-template-columns:1fr 1fr;}
+  footer{justify-content:center;text-align:center;}
+}
+@media(max-width:600px){
+  .hero{padding:76px 16px 44px;}
+  .hero-sub{margin-bottom:28px;}
+  .p-main{grid-template-columns:1fr;}
+  .p-adv-grid{grid-template-columns:1fr 1fr;}
+  .p-foot{flex-direction:column;align-items:stretch;}
+  .p-hint{display:none;}
+  .btn-gen{width:100%;justify-content:center;padding:14px;}
+  .ex-grid{grid-template-columns:1fr;}
+  .rg{grid-template-columns:repeat(3,1fr);}
+  .rc{padding:18px 6px;}
+  .rf{font-size:20px;}
+  .how-sec,.reg-sec,.feat-sec,.ex-sec{padding-top:56px;padding-bottom:56px;}
+  .cta-sec{padding-top:80px;padding-bottom:80px;}
+  .fc{padding:32px 22px;}
+  .story-body{padding:36px 16px 60px;}
+  .story-p{font-size:16px;}
+  .sh-content{padding:28px 16px 36px;}
+  .audio-bar{padding:12px 16px;gap:10px;}
+  .ab-vol{display:none;}
+  .rel-grid{grid-template-columns:1fr;}
+  .related-sec{padding:40px 16px 60px;}
+  footer{padding:24px 16px;gap:12px;}
+  .flinks{gap:16px;}
+}
+@media(hover:none){
+  .ec:active{transform:scale(.98);}
+  .how-card:active{background:var(--surf2);}
+  .rc:active .rn{color:var(--gold2);}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">Auten<span>tico</span></div>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#demo">Demo</a>
-    <a href="#demo" class="nav-cta">Try Free</a>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav" id="nav">
+  <a class="logo" href="#" onclick="showPage('landing')">
+    <span class="logo-gem"></span>Autentico
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#regions">Regions</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-nav" href="#" onclick="showPage('landing')">Generate</a>
+    <button class="nav-burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">✦ AI-Powered Authenticity Check</div>
-  <h1>Original Work<br>Never Needs<br>To Hide</h1>
-  <p class="hero-sub">Detect plagiarism in text and artwork with Claude AI intelligence + real-time web search.</p>
-  <div class="hero-actions">
-    <button class="btn-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Check Your Work Now</button>
-    <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Learn More</button>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat-item">
-    <div class="stat-num">98%</div>
-    <div class="stat-label">Analysis Accuracy</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">&lt;10s</div>
-    <div class="stat-label">Processing Time</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">2</div>
-    <div class="stat-label">Work Types</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">∞</div>
-    <div class="stat-label">Reference Sources</div>
-  </div>
+<!-- Mobile Drawer -->
+<div class="nav-drawer" id="drawer">
+  <a href="#how" onclick="toggleMenu()">How it works</a>
+  <a href="#explore" onclick="toggleMenu()">Explore</a>
+  <a href="#regions" onclick="toggleMenu()">Regions</a>
+  <a class="btn-nav" href="#" onclick="toggleMenu();showPage('landing')">Start Generating</a>
 </div>
 
-<!-- FEATURES -->
-<section id="features">
-  <div class="container">
-    <div class="section-label">✦ Capabilities</div>
-    <h2 class="section-title">Two Layers of<br>Work Protection</h2>
-    <p class="section-sub">Autentico combines deep AI analysis with web search for comprehensive results.</p>
+<!-- ════════════ LANDING PAGE ════════════ -->
+<div class="page active" id="page-landing">
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">📝</div>
-        <div class="feature-title">Text Detection</div>
-        <p class="feature-desc">Analyze writing patterns, language style, and sentence structure. Compare with billions of texts across the internet in real-time.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="h-glow"></div><div class="h-glow2"></div>
+    <div class="h-ring h-ring1"></div><div class="h-ring h-ring2"></div>
+
+    <p class="eyebrow"><span class="ey-ln"></span>AI · Folklore · Storytelling<span class="ey-ln"></span></p>
+    <h1 class="hero-title">Every culture<br>has a <em>story</em><br>to tell.</h1>
+    <p class="hero-sub">Choose a country, pick a folklore type, and let AI bring ancient tales to life — complete with narrative, original art, and atmospheric audio.</p>
+
+    <!-- PROMPT BOX -->
+    <div class="pbox">
+      <!-- 2 main fields -->
+      <div class="p-main">
+        <div class="sg">
+          <label class="sl">Country / Region</label>
+          <select class="cs" id="selCountry">
+            <option value="">— Select country —</option>
+            <optgroup label="Asia">
+              <option>Indonesia 🇮🇩</option><option>Japan 🇯🇵</option><option>India 🇮🇳</option>
+              <option>China 🇨🇳</option><option>Thailand 🇹🇭</option><option>Vietnam 🇻🇳</option>
+              <option>Korea 🇰🇷</option><option>Philippines 🇵🇭</option>
+            </optgroup>
+            <optgroup label="Europe">
+              <option>Greece 🇬🇷</option><option>Ireland 🇮🇪</option><option>Norway 🇳🇴</option>
+              <option>Russia 🇷🇺</option><option>Romania 🇷🇴</option>
+            </optgroup>
+            <optgroup label="Americas">
+              <option>Mexico 🇲🇽</option><option>Brazil 🇧🇷</option><option>Peru 🇵🇪</option>
+            </optgroup>
+            <optgroup label="Africa">
+              <option>Nigeria 🇳🇬</option><option>Egypt 🇪🇬</option><option>Ethiopia 🇪🇹</option>
+            </optgroup>
+            <optgroup label="Middle East">
+              <option>Arabia 🌙</option><option>Persia 🇮🇷</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="sg">
+          <label class="sl">Folklore Type</label>
+          <select class="cs" id="selType">
+            <option value="">— Select type —</option>
+            <option>Origin Myth</option><option>Hero's Journey</option><option>Spirit & Ghost Tale</option>
+            <option>Trickster Story</option><option>Love Legend</option><option>Creation Story</option>
+            <option>Fable / Moral Tale</option><option>Epic Saga</option><option>Nature Legend</option>
+          </select>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎨</div>
-        <div class="feature-title">Artwork Analysis</div>
-        <p class="feature-desc">Identify visual elements, artistic styles, and composition. Detect similarities with published works available online.</p>
+
+      <!-- Advanced toggle -->
+      <button class="p-adv-toggle" id="advToggle" onclick="toggleAdv()">
+        <span>Advanced options</span>
+        <span class="adv-arrow">▾</span>
+      </button>
+
+      <!-- Advanced panel -->
+      <div class="p-advanced" id="advPanel">
+        <div class="p-adv-grid">
+          <div class="sg">
+            <label class="sl">Tone</label>
+            <select class="cs" id="selTone">
+              <option>Ancient & Mythic</option><option>Dark & Haunting</option>
+              <option>Whimsical & Playful</option><option>Epic & Dramatic</option><option>Gentle & Poetic</option>
+            </select>
+          </div>
+          <div class="sg">
+            <label class="sl">Output</label>
+            <select class="cs" id="selOutput">
+              <option>Story + Art + Audio</option><option>Story only</option>
+              <option>Story + Art</option><option>Story + Audio</option>
+            </select>
+          </div>
+          <div class="sg">
+            <label class="sl">Length</label>
+            <select class="cs" id="selLen">
+              <option>Short — 2 min</option><option>Medium — 5 min</option>
+              <option>Long — 10 min</option><option>Epic — 20+ min</option>
+            </select>
+          </div>
+        </div>
+        <div class="sg" style="padding:8px 0 0">
+          <label class="sl">Art Style</label>
+          <select class="cs" id="selArt">
+            <option>Traditional Illustration</option><option>Ink & Brush</option>
+            <option>Watercolor</option><option>Block Print</option><option>Digital Epic</option>
+          </select>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <div class="feature-title">Web Search</div>
-        <p class="feature-desc">Automatic search across the entire internet to find original sources and similar works that may have been used as reference.</p>
+
+      <!-- Textarea -->
+      <div class="p-ta-w">
+        <textarea class="p-ta" id="pText" placeholder="Optional: a detail, character or setting — e.g. 'set on a volcanic island'…"></textarea>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <div class="feature-title">Narrative Reports</div>
-        <p class="feature-desc">Not just percentage numbers. Claude AI provides deep explanations about *why* a work is considered original or suspicious.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-title">Real-time Analysis</div>
-        <p class="feature-desc">Results in seconds. No long waits to know the authenticity of a work.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-title">Privacy Protected</div>
-        <p class="feature-desc">Your uploaded content is not stored. Analysis is performed securely and the work remains yours entirely.</p>
+
+      <div class="p-foot">
+        <p class="p-hint"><span class="h-dot"></span>~15 sec · Claude AI</p>
+        <button class="btn-gen" id="btnGen" onclick="handleGen()">
+          <div class="sp" id="sp"></div>
+          <span id="btnTxt">Generate Story</span>
+          <span class="ba" id="ba">→</span>
+        </button>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="container">
-    <div class="section-label">✦ How It Works</div>
-    <h2 class="section-title">Three Simple<br>Steps</h2>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-title">Upload Work</div>
-        <p class="step-desc">Paste text or upload artwork images that you want to verify for authenticity.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-title">AI Analyzes</div>
-        <p class="step-desc">Claude AI analyzes the work's characteristics and performs automatic web search.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-title">Receive Report</div>
-        <p class="step-desc">Get a complete report: authenticity score, similar sources, and easy-to-understand narrative explanation.</p>
-      </div>
+    <div class="tags">
+      <span class="tl">Try:</span>
+      <span class="tag" onclick="setQ('Japan 🇯🇵','Spirit & Ghost Tale')">Japan · Ghost Tale</span>
+      <span class="tag" onclick="setQ('Indonesia 🇮🇩','Origin Myth')">Indonesia · Myth</span>
+      <span class="tag" onclick="setQ('Greece 🇬🇷','Hero\'s Journey')">Greece · Hero</span>
+      <span class="tag" onclick="setQ('Nigeria 🇳🇬','Trickster Story')">Nigeria · Trickster</span>
+      <span class="tag" onclick="setQ('Arabia 🌙','Love Legend')">Arabia · Legend</span>
+      <span class="tag" onclick="setQ('Norway 🇳🇴','Epic Saga')">Norway · Epic</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- DEMO -->
-<section id="demo" class="demo-section">
-  <div class="container">
-    <div class="section-label">✦ Try It Now</div>
-    <h2 class="section-title">Interactive<br>Demo</h2>
-    <p class="section-sub">Test Autentico's capabilities yourself. Enter text or upload your artwork.</p>
+  <!-- MARQUEE -->
+  <div class="mqw"><div class="mq" id="mq"></div></div>
 
-    <div class="demo-wrapper">
-      <div class="demo-header">
-        <div class="demo-dot"></div>
-        <div class="demo-dot"></div>
-        <div class="demo-dot"></div>
-        <div class="demo-title-bar">autentico.ai — Authenticity Analysis</div>
-      </div>
-
-      <div class="demo-body">
-        <div class="demo-tabs">
-          <button class="tab-btn active" onclick="switchTab('text')">📝 Text</button>
-          <button class="tab-btn" onclick="switchTab('art')">🎨 Artwork</button>
-        </div>
-
-        <!-- TAB TEXT -->
-        <div class="tab-content active" id="tab-text">
-          <textarea class="input-area" id="textInput" placeholder="Paste the text you want to check for authenticity here...&#10;&#10;Example: article paragraphs, poems, essays, or any content."></textarea>
-          <div class="demo-footer">
-            <span class="demo-hint">🔒 Text is not stored. Analyzed securely.</span>
-            <button class="analyze-btn" id="analyzeTextBtn" onclick="analyzeText()">
-              <span>Analyze Now</span> →
-            </button>
-          </div>
-        </div>
-
-        <!-- TAB ART -->
-        <div class="tab-content" id="tab-art">
-          <div class="upload-zone" onclick="document.getElementById('imageInput').click()" id="uploadZone">
-            <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
-            <div class="upload-icon">🖼️</div>
-            <p class="upload-text"><strong>Click to upload</strong> or drag & drop<br>JPG, PNG, GIF up to 10MB</p>
-          </div>
-          <div id="imagePreviewArea" style="display:none; margin-top:16px;">
-            <img id="imagePreview" style="max-width:100%; max-height:200px; border-radius:12px; border:1px solid var(--border);">
-            <p style="margin-top:8px; font-size:0.8rem; color:var(--muted);" id="imageName"></p>
-          </div>
-          <div class="demo-footer">
-            <span class="demo-hint">🔒 Images are not stored after analysis.</span>
-            <button class="analyze-btn" id="analyzeImgBtn" onclick="analyzeImage()" disabled>
-              <span>Analyze Artwork</span> →
-            </button>
-          </div>
-        </div>
-
-        <!-- RESULT -->
-        <div class="result-box" id="resultBox">
-          <div class="result-header">
-            <div class="result-label">✦ Autentico Analysis Result</div>
-            <div class="score-badge">
-              <div class="score-bar-wrap">
-                <div class="score-bar-fill" id="scoreBar" style="width:0%"></div>
-              </div>
-              <span class="score-text" id="scoreText">—</span>
-            </div>
-          </div>
-          <div class="result-content" id="resultContent">
-            <div class="loading-dots">
-              <span></span><span></span><span></span>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- HOW IT WORKS -->
+  <section class="how-sec" id="how">
+    <p class="sec-lbl">How it works</p>
+    <h2 class="sec-h">Three steps to<br>a <em>living</em> legend.</h2>
+    <p class="sec-sub">From ancient oral traditions to immersive AI-powered stories — in seconds.</p>
+    <div class="how-grid">
+      <div class="how-card"><span class="hw-n">01</span><span class="hw-ic">🌍</span><h3 class="hw-t">Choose your world</h3><p class="hw-d">Select from 80+ countries and folklore traditions. Each region unlocks unique mythological archetypes, deities, and narrative structures authentic to that culture.</p></div>
+      <div class="how-card"><span class="hw-n">02</span><span class="hw-ic">✦</span><h3 class="hw-t">Shape your story</h3><p class="hw-d">Pick type, tone, length, and art style. Add optional details to personalise — a character, a setting, a moral. AI weaves it into culturally-rooted folklore.</p></div>
+      <div class="how-card"><span class="hw-n">03</span><span class="hw-ic">🎭</span><h3 class="hw-t">Experience & share</h3><p class="hw-d">Get a full narrative, original illustrations, and atmospheric audio. Read, listen, save to your library, or share your unique story with the world.</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TESTIMONIALS -->
-<section style="background: var(--surface);">
-  <div class="container">
-    <div class="section-label">✦ Testimonials</div>
-    <h2 class="section-title">Trusted by<br>Creators</h2>
-
-    <div class="testi-grid">
-      <div class="testi-card">
-        <p class="testi-quote">"Autentico helped me prove that my illustration was original when someone claimed otherwise. Extremely useful!"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">🎨</div>
-          <div>
-            <div class="testi-name">Sarah Chen</div>
-            <div class="testi-role">Freelance Illustrator</div>
-          </div>
+  <!-- EXAMPLES -->
+  <div class="ex-sec" id="explore">
+    <div class="ex-in">
+      <p class="sec-lbl">Generated stories</p>
+      <h2 class="sec-h">Tales from every<br><em>corner</em> of earth.</h2>
+      <div class="ex-grid">
+        <div class="ec" onclick="showStory()">
+          <div class="ei i1"><span class="iem">🌊</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Indonesia</span><span class="ec-dot"></span><span class="ec-type">Origin Myth</span></div><h3 class="et">The Daughter of the Sea</h3><p class="ee">Before the islands were named, the ocean held a goddess in its deepest fold. She rose on the first monsoon, and where her tears fell, volcanoes grew from the seafloor…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
         </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-quote">"As a professor, this tool helps me check the originality of student work much faster and more accurately than before."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">📚</div>
-          <div>
-            <div class="testi-name">Dr. James Morrison</div>
-            <div class="testi-role">University Professor</div>
-          </div>
+        <div class="ec" onclick="showStory()">
+          <div class="ei i2"><span class="iem">🦊</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Japan</span><span class="ec-dot"></span><span class="ec-type">Spirit Tale</span></div><h3 class="et">The Fox of a Thousand Winters</h3><p class="ee">In the pine forest of Kyoto, a nine-tailed kitsune had lived so long she forgot what loneliness meant — until a blind poet wandered off the mountain road…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill">Audio</span></div><span class="earr">→</span></div>
         </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-quote">"The narrative reports are far more informative than other tools. Not just percentages, but explanations I can actually understand."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">✍️</div>
-          <div>
-            <div class="testi-name">Emily Rodriguez</div>
-            <div class="testi-role">Content Creator</div>
-          </div>
+        <div class="ec" onclick="showStory()">
+          <div class="ei i3"><span class="iem">🔥</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Nigeria</span><span class="ec-dot"></span><span class="ec-type">Trickster Story</span></div><h3 class="et">Anansi Steals the Sun's Name</h3><p class="ee">The sky god kept all stories locked in a golden box. Anansi, with nothing but eight legs and a silver tongue, wagered the impossible — and won…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        </div>
+        <div class="ec" onclick="showStory()">
+          <div class="ei i4"><span class="iem">🌿</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Ireland</span><span class="ec-dot"></span><span class="ec-type">Nature Legend</span></div><h3 class="et">The Green Knight's Bargain</h3><p class="ee">Midsummer eve, and the hawthorn at the crossroads bloomed black. The faerie lord made his offer to the farmer's daughter: a year of luck, for one true thing…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        </div>
+        <div class="ec" onclick="showStory()">
+          <div class="ei i5"><span class="iem">⚡</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Greece</span><span class="ec-dot"></span><span class="ec-type">Hero's Journey</span></div><h3 class="et">Persephone, Unbound</h3><p class="ee">They say she was taken. But the pomegranate seeds were counted, and she chose each one with open eyes. This is the story the gods never wanted told…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        </div>
+        <div class="ec" onclick="showStory()">
+          <div class="ei i6"><span class="iem">🐉</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">China</span><span class="ec-dot"></span><span class="ec-type">Creation Story</span></div><h3 class="et">The Dragon Who Wept Mountains</h3><p class="ee">Long Sheng had carried the sky on his back for ten thousand years. When he set it down, his tears became the Yangtze River…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill">Audio</span></div><span class="earr">→</span></div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="container">
-    <div class="cta-inner">
-      <div class="section-label">✦ Get Started</div>
-      <h2 class="section-title">Protect Your Work<br>Today</h2>
-      <p style="color:var(--muted); margin: 16px auto 40px; max-width:400px;">Free to use. No registration required. Simply enter your work and get results.</p>
-      <button class="btn-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Start Free Analysis →</button>
+  <!-- REGIONS -->
+  <section class="reg-sec" id="regions">
+    <p class="sec-lbl">Explore by region</p>
+    <h2 class="sec-h">80+ cultures.<br><em>Infinite</em> stories.</h2>
+    <div class="rg">
+      <div class="rc"><span class="rf">🇮🇩</span><span class="rn">Indonesia</span><span class="rnum">340+</span></div>
+      <div class="rc"><span class="rf">🇯🇵</span><span class="rn">Japan</span><span class="rnum">210+</span></div>
+      <div class="rc"><span class="rf">🇮🇳</span><span class="rn">India</span><span class="rnum">520+</span></div>
+      <div class="rc"><span class="rf">🇨🇳</span><span class="rn">China</span><span class="rnum">480+</span></div>
+      <div class="rc"><span class="rf">🇬🇷</span><span class="rn">Greece</span><span class="rnum">190+</span></div>
+      <div class="rc"><span class="rf">🇳🇬</span><span class="rn">Nigeria</span><span class="rnum">160+</span></div>
+      <div class="rc"><span class="rf">🇮🇪</span><span class="rn">Ireland</span><span class="rnum">130+</span></div>
+      <div class="rc"><span class="rf">🌙</span><span class="rn">Arabia</span><span class="rnum">280+</span></div>
+      <div class="rc"><span class="rf">🇲🇽</span><span class="rn">Mexico</span><span class="rnum">170+</span></div>
+      <div class="rc"><span class="rf">🇳🇴</span><span class="rn">Norway</span><span class="rnum">140+</span></div>
+      <div class="rc"><span class="rf">🇵🇭</span><span class="rn">Philippines</span><span class="rnum">200+</span></div>
+      <div class="rc"><span class="rf">🇷🇺</span><span class="rn">Russia</span><span class="rnum">230+</span></div>
+      <div class="rc"><span class="rf">🇧🇷</span><span class="rn">Brazil</span><span class="rnum">150+</span></div>
+      <div class="rc"><span class="rf">🇪🇬</span><span class="rn">Egypt</span><span class="rnum">310+</span></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="feat-sec" id="features">
+    <div class="feat-in">
+      <p class="sec-lbl">What you get</p>
+      <h2 class="sec-h">Not just a story.<br>A full <em>experience.</em></h2>
+      <div class="fg">
+        <div class="fc"><span class="fi">📖</span><h3 class="ft">Authentic Narrative</h3><p class="fd">Each story draws from real mythological structures, archetypes, and storytelling traditions of the chosen region. No generic fantasy tropes.</p><span class="ftag">Powered by Claude AI</span></div>
+        <div class="fc"><span class="fi">🎨</span><h3 class="ft">Original Illustration</h3><p class="fd">Artwork generated in styles rooted in the culture's visual heritage — from Javanese wayang silhouettes to Japanese ukiyo-e to West African textile patterns.</p><span class="ftag">AI Image Generation</span></div>
+        <div class="fc"><span class="fi">🎙️</span><h3 class="ft">Atmospheric Audio</h3><p class="fd">Your story narrated at the pace of an elder by firelight. Traditional instruments and ambient soundscapes complete the world.</p><span class="ftag">AI Voice Narration</span></div>
+        <div class="fc"><span class="fi">🗄️</span><h3 class="ft">Your Story Library</h3><p class="fd">Save, organise, and revisit every story you generate. Share publicly or keep them in your personal folklore archive.</p><span class="ftag">Free & Pro accounts</span></div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Autentico</div>
-  <p>© 2025 Autentico. Built with Claude AI by Anthropic.</p>
-  <p style="margin-top:8px;">Protecting creative authenticity, one analysis at a time.</p>
-</footer>
+  <!-- CTA -->
+  <section class="cta-sec">
+    <h2 class="cta-h">The world's myths<br>are waiting to be <em>heard.</em></h2>
+    <p class="cta-p">Start with any country. Generate your first story free — no account required.</p>
+    <a class="btn-cta" onclick="showStory()">Begin Your First Story →</a>
+  </section>
+
+  <footer>
+    <a class="fl" href="#">Autentico</a>
+    <p class="fc2">© 2025 Autentico · AI-generated stories</p>
+    <ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Cultures</a></li><li><a href="#">Privacy</a></li><li><a href="#">Contact</a></li></ul>
+  </footer>
+
+</div><!-- /page-landing -->
+
+<!-- ════════════ STORY PAGE ════════════ -->
+<div class="page" id="page-story">
+
+  <!-- Full-bleed story hero -->
+  <div class="story-hero">
+    <div class="sh-bg"></div>
+    <div class="sh-pattern"></div>
+    <div class="sh-orb sh-orb1"></div>
+    <div class="sh-orb sh-orb2"></div>
+    <div class="sh-orb sh-orb3"></div>
+    <div class="sh-art">🌊</div>
+    <div class="sh-overlay"></div>
+    <div class="sh-content">
+      <div class="sh-meta">
+        <span class="sh-country">Indonesia 🇮🇩</span>
+        <span class="sh-sep">·</span>
+        <span class="sh-type">Origin Myth</span>
+        <span class="sh-sep">·</span>
+        <span class="sh-type">Ancient & Mythic</span>
+      </div>
+      <h1 class="sh-title">The Daughter<br>of the <em>Sea</em></h1>
+      <p class="sh-tagline">"Before the islands were named, the ocean held a goddess in its deepest fold…"</p>
+    </div>
+  </div>
+
+  <!-- Audio Player -->
+  <div class="audio-bar">
+    <button class="ab-play" id="playBtn" onclick="togglePlay()">
+      <svg id="playIco" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+    </button>
+    <div class="ab-info">
+      <div class="ab-title">The Daughter of the Sea — Narrated · Gamelan &amp; Ocean Ambience</div>
+      <div class="ab-track">
+        <div class="ab-bar" onclick="seekAudio(event)">
+          <div class="ab-prog" id="abProg"></div>
+        </div>
+        <span class="ab-time" id="abTime">1:42 / 4:55</span>
+      </div>
+    </div>
+    <div class="ab-vol">
+      <svg viewBox="0 0 16 16"><path d="M3 5v6h4l5 4V1L7 5H3z"/></svg>
+      <div class="ab-vol-bar"><div class="ab-vol-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Story body -->
+  <div class="story-body">
+    <!-- Main text -->
+    <article class="story-text">
+      <p class="story-chapter">Part I — The First Waters</p>
+
+      <p class="story-p drop-cap">Before the islands of the archipelago were given their names, before the fishermen learned the rhythms of the tide, the ocean was a single, unbroken thought. Deep beneath the surface where light could not reach, where the pressure of ten thousand fathoms compressed the water into something almost solid, there lived a goddess. Her name, in the language of the deep, was <em>Samudri Kanya</em> — the Daughter of the Sea.</p>
+
+      <p class="story-p">She had no mother and no father, for she had emerged from the first collision of salt and darkness at the beginning of time. Her hair was made of kelp and phosphorescent creatures that lit her way through the eternal night of the ocean floor. Her eyes were the colour of the water at the exact moment before a storm — that peculiar green that contains both danger and promise.</p>
+
+      <div class="pull-quote">
+        <p class="pq-text">She had never seen the sky. She did not know that above the surface of the water, there existed a world of burning light and breathing creatures — a world that, one day, she would help bring into being.</p>
+      </div>
+
+      <p class="story-p">For ten thousand years she slept in her palace of coral and obsidian, dreaming dreams that rippled outward through the ocean floor, causing distant tremors that sailors would one day attribute to angry spirits. Her dreams were the first stories — of colour, of warmth, of a sensation she had no name for but which we would call <em>longing</em>.</p>
+
+      <p class="story-p">It was the arrival of a single ray of light that woke her. A crack had formed in the ocean floor — a volcanic fissure that opened like an eye, and through it, impossibly, fell a beam of sunlight from the surface world above. It touched her face.</p>
+
+      <!-- Illustration break -->
+      <div class="story-illus">
+        <div class="si-box">
+          <span class="si-em">🌊</span>
+          <div class="si-ov2"></div>
+        </div>
+        <p class="si-caption">Illustration · Batik ink style · AI Generated</p>
+      </div>
+
+      <p class="story-chapter">Part II — The Rising</p>
+
+      <p class="story-p">The goddess woke as though from a dream she had been dreaming all her life. The light burned her eyes, which had never before encountered such a thing, and she wept. Her tears fell upward — for in the deep ocean, even tears must choose a direction, and hers chose to rise.</p>
+
+      <p class="story-p">Each tear that left her became something. The first tear, enormous and heavy, hit the ocean floor and erupted — a volcano, building itself layer by layer toward the surface. Then another. Then another. She wept for seven days and seven nights, and with each tear, a new island was born from the sea.</p>
+
+      <p class="story-p">The archipelago stretched out like a necklace of green jewels across the equatorial ocean. Birds arrived from distant continents, carried on winds. Trees grew from seeds that the waves deposited on the new shores. Rain clouds gathered above the mountains her tears had built, and rivers began to flow down to the sea, carrying the red earth back to her.</p>
+
+      <div class="pull-quote">
+        <p class="pq-text">The people say that when you taste the sea, you taste the grief of the goddess — and also her joy, for she did not weep from sadness. She wept because beauty, once seen, is impossible to contain.</p>
+      </div>
+
+      <p class="story-p">Eventually, the first humans arrived — on rafts and boats, following stars and birds, guided by instincts older than language. They settled on the goddess's islands, planted their gardens above her coral palace, and cast their nets into the waters where she still lived below, watching them with her storm-coloured eyes.</p>
+
+      <p class="story-p">They did not know she was there. But she knew them — every fisherman who whispered a prayer before the dawn departure, every child who stood at the water's edge and stared into the deep as if searching for something they had lost but could not name. She heard them all. And sometimes, when the moon was full and the water was calm, she would rise just enough to let one of them glimpse something beneath the surface — a shimmer, a shape, a face — before disappearing again into the world she had made from her own grief and her own wonder.</p>
+
+      <p class="story-p">This is why the people of the archipelago say: <em>the ocean is not empty</em>. It is the oldest home. And it remembers everything.</p>
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="story-sidebar">
+      <!-- Story actions -->
+      <div class="ss-card ss-actions">
+        <div class="ss-title">This story</div>
+        <button class="btn-regen" onclick="showPage('landing')">← Generate New Story</button>
+        <div class="share-row">
+          <button class="btn-share">Save</button>
+          <button class="btn-share">Share</button>
+          <button class="btn-share">Download</button>
+        </div>
+      </div>
+      <!-- Metadata -->
+      <div class="ss-card ss-meta-card">
+        <div class="ss-title">Story details</div>
+        <div class="ss-stat"><span class="ss-stat-l">Origin</span><span class="ss-stat-r">Indonesia 🇮🇩</span></div>
+        <div class="ss-stat"><span class="ss-stat-l">Type</span><span class="ss-stat-r">Origin Myth</span></div>
+        <div class="ss-stat"><span class="ss-stat-l">Read time</span><span class="ss-stat-r">~5 min</span></div>
+        <div class="ss-stat"><span class="ss-stat-l">Audio</span><span class="ss-stat-r">4:55</span></div>
+        <div class="ss-tags">
+          <span class="ss-tag">Nusantara</span><span class="ss-tag">Sea</span><span class="ss-tag">Creation</span>
+          <span class="ss-tag">Goddess</span><span class="ss-tag">Islands</span>
+        </div>
+      </div>
+      <!-- Context card -->
+      <div class="ss-card">
+        <div class="ss-title">Cultural context</div>
+        <div class="ss-body">The archipelago's oral traditions are rich with sea goddess mythology, reflecting the central role of the ocean in daily life. Themes of creation-through-emotion appear across Javanese, Sundanese, and Balinese folk traditions.</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Related stories -->
+  <div class="related-sec">
+    <div class="related-in">
+      <p class="sec-lbl">More stories</p>
+      <h2 class="sec-h">You might also <em>love.</em></h2>
+      <div class="rel-grid">
+        <div class="ec" onclick="scrollToTop()">
+          <div class="ei i2"><span class="iem">🦊</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Japan</span><span class="ec-dot"></span><span class="ec-type">Spirit Tale</span></div><h3 class="et">The Fox of a Thousand Winters</h3><p class="ee">A nine-tailed kitsune who had forgotten loneliness — until a blind poet wandered off the mountain road…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span></div><span class="earr">→</span></div>
+        </div>
+        <div class="ec" onclick="scrollToTop()">
+          <div class="ei i4"><span class="iem">🌿</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Philippines</span><span class="ec-dot"></span><span class="ec-type">Origin Myth</span></div><h3 class="et">How Bathala Made the World</h3><p class="ee">Before sky and earth were separated, a great god hovered between them, deciding what to keep and what to let fall…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        </div>
+        <div class="ec" onclick="scrollToTop()">
+          <div class="ei i6"><span class="iem">🐉</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Vietnam</span><span class="ec-dot"></span><span class="ec-type">Creation Story</span></div><h3 class="et">Lạc Long Quân & Âu Cơ</h3><p class="ee">A dragon lord and a mountain fairy fell in love across the boundary of two worlds — and their children became the Vietnamese people…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a class="fl" href="#">Autentico</a>
+    <p class="fc2">© 2025 Autentico · AI-generated stories</p>
+    <ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Cultures</a></li><li><a href="#">Privacy</a></li></ul>
+  </footer>
+
+</div><!-- /page-story -->
 
 <script>
-  // TAB SWITCHING
-  function switchTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    event.target.classList.add('active');
-    document.getElementById('resultBox').classList.remove('visible');
+// ── CURSOR (desktop only) ──────────────────────
+const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+const cur=document.getElementById('cur'),cring=document.getElementById('curRing');
+if(isTouch){cur.style.display='none';cring.style.display='none';}
+else{
+  document.body.style.cursor='none';
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(a);})();
+  document.querySelectorAll('a,button,.tag,.ec,.rc').forEach(el=>el.style.cursor='none');
+}
+
+// ── PAGE SWITCH ───────────────────────────────
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function showStory(){showPage('story');}
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+
+// ── HAMBURGER ────────────────────────────────
+function toggleMenu(){document.getElementById('drawer').classList.toggle('open');}
+
+// ── NAV SCROLL ───────────────────────────────
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>36));
+
+// ── MARQUEE ──────────────────────────────────
+const tales=['Indonesia · Malin Kundang','Japan · Kaguya-hime','India · Shakuntala','Nigeria · Anansi','Greece · Medusa','Ireland · Fionn Mac Cumhaill','Arabia · One Thousand Nights','China · Mulan','Norway · Fenrir','Mexico · Quetzalcoatl','Egypt · Osiris','Russia · Baba Yaga','Philippines · Bathala','Peru · Viracocha','Korea · Dangun','Vietnam · Lạc Long Quân'];
+const mq=document.getElementById('mq');
+[...tales,...tales].forEach(t=>{const s=document.createElement('span');s.className='mi';s.innerHTML=`${t}<span class="ms">✦</span>`;mq.appendChild(s);});
+
+// Advanced toggle
+function toggleAdv(){
+  const panel=document.getElementById('advPanel');
+  const toggle=document.getElementById('advToggle');
+  panel.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+
+function setQ(country,type){
+  const sc=document.getElementById('selCountry'),st=document.getElementById('selType');
+  for(let o of sc.options){if(o.text.startsWith(country.split(' ')[0])){sc.value=o.value;break;}}
+  for(let o of st.options){if(o.text===type){st.value=o.value;break;}}
+  document.getElementById('pText').focus();
+  document.querySelector('.pbox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ── GENERATE ─────────────────────────────────
+function handleGen(){
+  const country=document.getElementById('selCountry').value;
+  const type=document.getElementById('selType').value;
+  if(!country){shake(document.getElementById('selCountry'));return;}
+  if(!type){shake(document.getElementById('selType'));return;}
+  const btn=document.getElementById('btnGen');
+  btn.classList.add('loading');
+  document.getElementById('sp').style.display='block';
+  document.getElementById('btnTxt').textContent='Weaving your tale…';
+  document.getElementById('ba').style.display='none';
+  setTimeout(()=>{
+    btn.classList.remove('loading');
+    document.getElementById('sp').style.display='none';
+    document.getElementById('ba').style.display='inline';
+    document.getElementById('btnTxt').textContent='Generate Story';
+    showStory();
+  },2400);
+}
+function shake(el){
+  el.style.borderColor='var(--terra)';
+  el.animate([{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(-4px)'},{transform:'translateX(0)'}],{duration:280});
+  setTimeout(()=>el.style.borderColor='',500);
+}
+
+// ── FAKE AUDIO PLAYER ────────────────────────
+let playing=false,prog=35,timer=null;
+function togglePlay(){
+  playing=!playing;
+  const ico=document.getElementById('playIco');
+  if(playing){
+    ico.innerHTML='<rect x="3" y="2" width="4" height="12"/><rect x="9" y="2" width="4" height="12"/>';
+    timer=setInterval(()=>{
+      prog=Math.min(prog+.08,100);
+      document.getElementById('abProg').style.width=prog+'%';
+      const tot=295,cur2=Math.round(tot*(prog/100));
+      document.getElementById('abTime').textContent=fmt(cur2)+' / '+fmt(tot);
+      if(prog>=100)clearInterval(timer);
+    },100);
+  } else {
+    ico.innerHTML='<polygon points="4,2 14,8 4,14"/>';
+    clearInterval(timer);
   }
+}
+function seekAudio(e){
+  const bar=e.currentTarget;
+  const pct=e.offsetX/bar.offsetWidth;
+  prog=pct*100;
+  document.getElementById('abProg').style.width=prog+'%';
+}
+function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
 
-  // IMAGE UPLOAD
-  let imageBase64 = null;
-
-  function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imageBase64 = e.target.result.split(',')[1];
-      document.getElementById('imagePreview').src = e.target.result;
-      document.getElementById('imageName').textContent = file.name;
-      document.getElementById('imagePreviewArea').style.display = 'block';
-      document.getElementById('uploadZone').style.display = 'none';
-      document.getElementById('analyzeImgBtn').disabled = false;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // SCORE DISPLAY
-  function displayScore(scoreMatch) {
-    const scoreBar = document.getElementById('scoreBar');
-    const scoreText = document.getElementById('scoreText');
-
-    let score = 85;
-    if (scoreMatch) {
-      const num = parseInt(scoreMatch[1]);
-      score = num;
-    }
-
-    setTimeout(() => {
-      scoreBar.style.width = score + '%';
-      scoreText.textContent = score + '%';
-
-      scoreBar.className = 'score-bar-fill';
-      if (score >= 70) {
-        // high originality - green
-      } else if (score >= 40) {
-        scoreBar.classList.add('medium');
-      } else {
-        scoreBar.classList.add('low');
-      }
-    }, 300);
-  }
-
-  // ANALYZE TEXT
-  async function analyzeText() {
-    const text = document.getElementById('textInput').value.trim();
-    if (!text) {
-      alert('Please enter text first.');
-      return;
-    }
-
-    const btn = document.getElementById('analyzeTextBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
-
-    const resultBox = document.getElementById('resultBox');
-    const resultContent = document.getElementById('resultContent');
-
-    resultBox.classList.add('visible');
-    resultContent.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div> Analyzing text and searching the web...';
-    document.getElementById('scoreBar').style.width = '0%';
-    document.getElementById('scoreText').textContent = '—';
-
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-          system: `You are Autentico, a sophisticated AI-based plagiarism detection system.
-Your task is to analyze the provided text and assess its authenticity.
-
-Do the following:
-1. Analyze writing patterns, language style, and text structure
-2. Use web search to find similar content on the internet
-3. Provide a report in the following format (MUST be in English):
-
-AUTHENTICITY SCORE: [number 0-100]%
-
-SUMMARY: [2-3 concise sentences about the analysis results]
-
-FINDINGS:
-- [Finding 1]
-- [Finding 2]
-- [Finding 3]
-
-CONCLUSION: [1 paragraph final conclusion]
-
-If the score is high (>70%) it means the work appears original. If low (<40%) it means there are many similarities.`,
-          messages: [{ role: 'user', content: `Analyze the authenticity of the following text:\n\n${text}` }]
-        })
-      });
-
-      const data = await response.json();
-      const fullText = data.content.map(i => i.text || '').filter(Boolean).join('\n');
-
-      const scoreMatch = fullText.match(/AUTHENTICITY SCORE:\s*(\d+)%/i);
-      displayScore(scoreMatch);
-
-      const cleanText = fullText.replace(/AUTHENTICITY SCORE:\s*\d+%\s*/i, '').trim();
-      resultContent.textContent = cleanText;
-
-    } catch (err) {
-      resultContent.textContent = 'An error occurred while analyzing. Please ensure the API key is valid and try again.';
-    }
-
-    btn.disabled = false;
-    btn.innerHTML = '<span>Analyze Now</span> →';
-  }
-
-  // ANALYZE IMAGE
-  async function analyzeImage() {
-    if (!imageBase64) return;
-
-    const btn = document.getElementById('analyzeImgBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
-
-    const resultBox = document.getElementById('resultBox');
-    const resultContent = document.getElementById('resultContent');
-
-    resultBox.classList.add('visible');
-    resultContent.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div> Analyzing artwork and searching for references...';
-    document.getElementById('scoreBar').style.width = '0%';
-    document.getElementById('scoreText').textContent = '—';
-
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-          system: `You are Autentico, an AI-based artwork authenticity analysis system.
-Your task is to analyze images/artwork and assess their originality.
-
-Do the following:
-1. Identify artistic style, technique, and key visual elements
-2. Search the web for similar existing works
-3. Provide a report in English:
-
-AUTHENTICITY SCORE: [number 0-100]%
-
-VISUAL ANALYSIS: [Description of style and artwork characteristics]
-
-WEB FINDINGS:
-- [Finding 1 from web search]
-- [Finding 2]
-
-CONCLUSION: [Conclusion about the artwork's originality]`,
-          messages: [{
-            role: 'user',
-            content: [
-              { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: imageBase64 } },
-              { type: 'text', text: 'Analyze the authenticity of this artwork. Search for similar references on the internet.' }
-            ]
-          }]
-        })
-      });
-
-      const data = await response.json();
-      const fullText = data.content.map(i => i.text || '').filter(Boolean).join('\n');
-
-      const scoreMatch = fullText.match(/AUTHENTICITY SCORE:\s*(\d+)%/i);
-      displayScore(scoreMatch);
-
-      const cleanText = fullText.replace(/AUTHENTICITY SCORE:\s*\d+%\s*/i, '').trim();
-      resultContent.textContent = cleanText;
-
-    } catch (err) {
-      resultContent.textContent = 'An error occurred. Please ensure the image file is valid and try again.';
-    }
-
-    btn.disabled = false;
-    btn.innerHTML = '<span>Analyze Artwork</span> →';
-  }
-
-  // DRAG AND DROP
-  const uploadZone = document.getElementById('uploadZone');
-  if (uploadZone) {
-    uploadZone.addEventListener('dragover', e => {
-      e.preventDefault();
-      uploadZone.style.borderColor = 'var(--gold)';
-      uploadZone.style.background = 'var(--gold-dim)';
-    });
-
-    uploadZone.addEventListener('dragleave', () => {
-      uploadZone.style.borderColor = '';
-      uploadZone.style.background = '';
-    });
-
-    uploadZone.addEventListener('drop', e => {
-      e.preventDefault();
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith('image/')) {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        document.getElementById('imageInput').files = dt.files;
-        handleImageUpload({ target: { files: dt.files } });
-      }
-    });
-  }
+// ── SCROLL FADE-IN ───────────────────────────
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
+}),{threshold:.08});
+document.querySelectorAll('.how-card,.ec,.rc,.fc').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .5s ease, transform .5s ease';
+  obs.observe(el);
+});
 </script>
-
 </body>
 </html>
