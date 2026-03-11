@@ -290,11 +290,211 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
 .related-in{max-width:1100px;margin:0 auto;}
 .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:40px;background:var(--bdr);}
 
+/* ══════════════════════════════
+   TREASURE & TRAP SYSTEM
+══════════════════════════════ */
+
+/* Game HUD strip */
+.story-game-hud{
+  position:sticky;top:58px;z-index:98;
+  display:flex;align-items:center;gap:0;
+  background:var(--bg);border-bottom:1px solid var(--bdr);
+  padding:0 16px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.story-game-hud::-webkit-scrollbar{display:none;}
+.sgh-item{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 14px;
+  font-family:'DM Mono',monospace;font-size:8.5px;
+  letter-spacing:.12em;text-transform:uppercase;
+  white-space:nowrap;border-right:1px solid var(--bdr);
+  flex-shrink:0;
+}
+.sgh-item:last-child{border-right:none;}
+.sgh-icon{font-size:13px;}
+.sgh-val{color:var(--cream);font-weight:400;}
+.sgh-lbl{color:var(--muted);}
+.xp-bar-outer{width:80px;height:4px;background:rgba(107,140,110,.2);border-radius:2px;overflow:hidden;}
+.xp-bar-inner{height:100%;background:linear-gradient(90deg,#6B8C6E,#A8D4AA);border-radius:2px;transition:width .8s ease;}
+
+/* Chapter progress tabs */
+.chapter-nav{
+  display:flex;align-items:center;gap:0;
+  border-bottom:1px solid var(--bdr);
+  padding:0 16px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  background:var(--surf);
+}
+.chapter-nav::-webkit-scrollbar{display:none;}
+.chap-tab{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+  padding:11px 14px;border-bottom:2px solid transparent;
+  cursor:pointer;white-space:nowrap;display:flex;align-items:center;
+  gap:6px;background:none;border-top:none;border-left:none;border-right:none;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  flex-shrink:0;min-height:40px;
+}
+.chap-tab.ct-active{color:var(--gold);border-bottom-color:var(--gold);}
+.chap-tab.ct-done{color:var(--sage);}
+.chap-tab.ct-locked{opacity:.3;cursor:default;}
+.chap-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.chap-tab.ct-treasure{color:var(--gold2);}
+.chap-tab.ct-trap{color:var(--terra);}
+
+/* Reading progress bar */
+.read-progress{height:2px;background:rgba(200,146,42,.1);}
+.read-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s;}
+
+/* Chapter body */
+.chap-body{display:none;max-width:720px;margin:0 auto;padding:40px 20px 20px;}
+.chap-body.ch-active{display:block;}
+
+/* End-of-chapter puzzle */
+.puzzle-card{
+  margin:40px 0 0;
+  border:1px solid var(--bdr);
+  background:var(--surf);
+  overflow:hidden;
+}
+.puzzle-header{
+  padding:18px 20px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--bdr);
+  background:rgba(200,146,42,.04);
+}
+.puzzle-icon{font-size:22px;flex-shrink:0;}
+.puzzle-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
+.puzzle-q{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,22px);font-weight:300;color:var(--cream);margin-top:4px;line-height:1.4;}
+.puzzle-stake{
+  display:flex;align-items:center;gap:16px;padding:12px 20px;
+  border-bottom:1px solid var(--bdr);flex-wrap:wrap;gap:10px;
+}
+.stake-item{
+  display:flex;align-items:center;gap:6px;
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;
+}
+.stake-win{color:var(--sage);}
+.stake-lose{color:var(--terra);}
+.puzzle-opts{padding:16px 20px;display:flex;flex-direction:column;gap:8px;}
+.puzzle-opt{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 16px;border:1px solid var(--bdr);
+  background:var(--bg);cursor:pointer;
+  transition:border-color .2s,background .15s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  text-align:left;width:100%;min-height:50px;
+}
+.puzzle-opt:hover:not(:disabled){border-color:var(--gold);background:rgba(200,146,42,.04);}
+.puzzle-opt:disabled{cursor:default;}
+.opt-letter{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--muted);flex-shrink:0;margin-top:1px;
+  width:18px;
+}
+.opt-text{font-size:clamp(13px,2vw,15px);color:var(--cream2);line-height:1.5;text-align:left;}
+.puzzle-opt.opt-correct{border-color:var(--sage)!important;background:rgba(107,140,110,.1)!important;}
+.puzzle-opt.opt-correct .opt-letter{color:var(--sage);}
+.puzzle-opt.opt-wrong{border-color:var(--terra)!important;background:rgba(196,98,45,.08)!important;}
+.puzzle-opt.opt-wrong .opt-letter{color:var(--terra);}
+
+/* Puzzle result reveal */
+.puzzle-result{
+  display:none;padding:20px;
+  border-top:1px solid var(--bdr);
+}
+.puzzle-result.pr-show{display:block;}
+.pr-treasure{background:rgba(200,146,42,.06);border-top-color:rgba(200,146,42,.3);}
+.pr-trap{background:rgba(196,98,45,.06);border-top-color:rgba(196,98,45,.3);}
+.pr-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.pr-icon{font-size:28px;}
+.pr-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;}
+.pr-treasure .pr-title{color:var(--gold2);}
+.pr-trap .pr-title{color:var(--terra);}
+.pr-body{font-size:14px;color:var(--cream2);line-height:1.7;margin-bottom:14px;}
+.pr-rewards{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.pr-reward-chip{
+  display:flex;align-items:center;gap:6px;
+  font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 10px;border:1px solid;
+}
+.chip-token{color:var(--gold);border-color:rgba(200,146,42,.3);background:rgba(200,146,42,.08);}
+.chip-xp{color:#A8D4AA;border-color:rgba(107,140,110,.3);background:rgba(107,140,110,.08);}
+.chip-fragment{color:var(--cream2);border-color:var(--bdr2);}
+.chip-badge{color:var(--gold2);border-color:rgba(232,184,75,.3);background:rgba(232,184,75,.06);}
+.chip-trap{color:var(--terra);border-color:rgba(196,98,45,.3);background:rgba(196,98,45,.08);}
+.btn-next-chapter{
+  width:100%;background:var(--gold);color:var(--bg);
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  padding:14px;border:none;cursor:pointer;
+  transition:background .2s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:48px;
+}
+.btn-next-chapter:hover{background:var(--gold2);}
+.btn-next-chapter:disabled{opacity:.4;cursor:default;}
+
+/* Fragment collector sidebar card */
+.ss-fragments{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.frag-chip{
+  width:32px;height:32px;border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;position:relative;
+  transition:border-color .3s;
+}
+.frag-chip.collected{border-color:var(--gold);background:rgba(200,146,42,.08);}
+.frag-chip.not-collected{opacity:.25;}
+
+/* Final story unlock (collect all fragments) */
+.fragments-complete{
+  margin:20px 0;padding:20px;
+  border:1px solid rgba(200,146,42,.4);
+  background:rgba(200,146,42,.06);
+  text-align:center;
+}
+.fc-icon{font-size:36px;display:block;margin-bottom:10px;}
+.fc-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold2);margin-bottom:6px;}
+.fc-body{font-size:13px;color:var(--cream2);margin-bottom:14px;line-height:1.6;}
+
+/* Story end screen */
+.story-end{
+  max-width:720px;margin:0 auto;
+  padding:40px 20px 80px;
+  text-align:center;
+  display:none;
+}
+.story-end.se-show{display:block;}
+.se-icon{font-size:52px;display:block;margin-bottom:20px;}
+.se-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,44px);font-weight:300;color:var(--cream);margin-bottom:8px;}
+.se-sub{font-size:15px;color:var(--muted);font-style:italic;margin-bottom:32px;}
+.se-rewards{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px;}
+.se-stat{text-align:center;padding:16px 20px;border:1px solid var(--bdr);background:var(--surf);min-width:100px;}
+.se-stat-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--cream);}
+.se-stat-lbl{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.se-actions{display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto;}
+
+/* Mobile adjustments for story */
+@media(max-width:600px){
+  .chap-body{padding:28px 16px 16px;}
+  .puzzle-card{margin:28px 0 0;}
+  .puzzle-header{padding:14px 16px;}
+  .puzzle-opts{padding:12px 16px;gap:6px;}
+  .puzzle-opt{padding:12px 14px;}
+  .story-game-hud{padding:0 12px;}
+  .sgh-item{padding:9px 10px;font-size:8px;}
+  .chapter-nav{padding:0 8px;}
+  .chap-tab{padding:10px 10px;font-size:7.5px;}
+  .pr-body{font-size:13px;}
+  .btn-next-chapter{padding:15px;font-size:9.5px;}
+  .se-stat{padding:12px 16px;min-width:80px;}
+  .se-stat-val{font-size:26px;}
+}
+
 /* ─── DOOR + GARDEN SCENE ─────────────────── */
 .door-scene{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:40px;}
 
 .door-frame{
-  position:relative;width:300px;height:420px;
+  position:relative;width:min(300px,85vw);height:min(420px,120vw);
   perspective:900px;
   filter:drop-shadow(0 32px 80px rgba(0,0,0,.85)) drop-shadow(0 0 40px rgba(200,146,42,.08));
 }
@@ -704,18 +904,140 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
 
 /* Token gain animation */
 @keyframes tokenPop{0%{transform:scale(1);}40%{transform:scale(1.35);}100%{transform:scale(1);}}
-.token-pop{animation:tokenPop .35s ease;}
+.token-pop{animation:tokenPop .35s ease;will-change:transform;}
 
+/* ── TOUCH & iOS FIXES ── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+.story-card,.quest-item,.cont-tab,.tok-pkg,.badge-card{
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.hud-btn,.btn-confirm,.btn-secondary,.modal-close{
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:44px;
+}
+.quest-item,.cont-tab{min-height:44px;display:flex;align-items:center;}
+.modal-box,.quest-bar,.continent-nav{-webkit-overflow-scrolling:touch;}
+/* iOS safe area for modals */
+@supports(padding-bottom:env(safe-area-inset-bottom)){
+  .modal-box{padding-bottom:max(28px,env(safe-area-inset-bottom));}
+  .achieve-toast{bottom:max(0px,env(safe-area-inset-bottom));}
+}
+
+/* ── GAME MOBILE: tablet ── */
 @media(max-width:960px){
-  .quest-bar{padding:12px 16px;}
-  .continent-nav{padding:0 16px;}
-  .story-grid-wrap{padding:28px 16px;}
+  /* Explore page */
+  .exp-page{padding:80px 0 60px;}
+  .exp-hero{padding:0 16px 40px;}
+  .token-hud{gap:10px;padding:0 12px;}
+  .hud-card{padding:12px 16px;min-width:120px;}
+  .hud-val{font-size:22px;}
+  .hud-btn{padding:10px 14px;font-size:8.5px;}
+
+  /* Quest bar */
+  .quest-bar{padding:10px 16px;gap:10px;margin-bottom:32px;}
+  .quest-item{padding:10px 12px;}
+
+  /* Continent tabs */
+  .continent-nav{padding:0 12px;}
+  .cont-tab{padding:10px 14px;font-size:8.5px;}
+
+  /* Story grid */
+  .story-grid-wrap{padding:24px 16px;}
+  .story-cards{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+
+  /* Leaderboard */
   .leaderboard-wrap,.badges-wrap{padding:0 16px 40px;}
   .lb-grid{grid-template-columns:1fr;}
+
+  /* Roadmap */
   .roadmap-page{padding:80px 16px 60px;}
-  .rm-phase{grid-template-columns:80px 1px 1fr;gap:0 16px;}
-  .rm-phase::before{left:80px;}
-  .rm-dot{left:72px;}
+  .rm-phase{grid-template-columns:70px 1px 1fr;gap:0 16px;}
+  .rm-phase::before{left:70px;}
+  .rm-dot{left:62px;}
+  .rm-timing-val{font-size:7.5px;}
+}
+
+/* ── GAME MOBILE: phone ── */
+@media(max-width:600px){
+  /* Explore hero */
+  .exp-page{padding:72px 0 48px;}
+  .exp-hero{padding:0 16px 32px;}
+  .token-hud{flex-direction:column;align-items:stretch;gap:8px;padding:0 16px;max-width:100%;}
+  .hud-card{min-width:unset;width:100%;justify-content:flex-start;}
+  .hud-btn{width:100%;padding:13px 16px;font-size:9px;text-align:center;}
+
+  /* Quest bar — stack vertically */
+  .quest-bar{flex-wrap:wrap;gap:8px;padding:12px 16px;margin-bottom:24px;overflow-x:unset;}
+  .quest-item{flex:1 1 calc(50% - 4px);min-width:0;padding:10px 12px;}
+  .qi-text{font-size:8px;letter-spacing:.08em;}
+
+  /* Continent tabs — scrollable, smaller */
+  .continent-nav{padding:0 8px;-webkit-overflow-scrolling:touch;}
+  .cont-tab{padding:10px 12px;font-size:8px;letter-spacing:.12em;}
+
+  /* Story grid — single column */
+  .story-grid-wrap{padding:16px 12px;}
+  .story-cards{grid-template-columns:1fr;}
+  .country-head{margin-bottom:12px;}
+  .ch-name{font-size:18px;}
+  .sc-title{font-size:15px;}
+  .sc-excerpt{font-size:12px;}
+
+  /* Story card touch feedback */
+  .story-card:active{background:var(--surf2);}
+
+  /* Leaderboard */
+  .leaderboard-wrap{padding:0 12px 40px;}
+  .lb-row{padding:10px 14px;gap:8px;}
+  .lb-val{font-size:14px;}
+  .lb-name{font-size:8.5px;}
+
+  /* Badges */
+  .badges-wrap{padding:0 12px 40px;}
+  .badges-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
+  .bc-icon{font-size:22px;}
+  .bc-name{font-size:7.5px;}
+  .bc-desc{font-size:10px;}
+
+  /* Modals — full width bottom sheet feel */
+  .modal-overlay{align-items:flex-end;padding:0;}
+  .modal-box{max-width:100%;width:100%;border-radius:0;max-height:85vh;border-left:none;border-right:none;border-bottom:none;}
+  .modal-head{padding:20px 20px 0;}
+  .modal-body{padding:16px 20px 32px;}
+  .token-packages{grid-template-columns:1fr 1fr;gap:6px;}
+  .tok-pkg{padding:14px 10px;}
+  .tok-pkg-amount{font-size:24px;}
+  .tok-pkg-icon{font-size:20px;}
+
+  /* Read modal */
+  .rm-cost{padding:10px 14px;}
+  .rm-cost-val{font-size:18px;}
+  .btn-confirm{padding:15px;font-size:9.5px;}
+  .btn-secondary{padding:12px;font-size:9.5px;}
+
+  /* Achievement toast — full width bottom */
+  .achieve-toast{bottom:0;right:0;left:0;max-width:100%;border-left:none;border-right:none;border-bottom:none;transform:translateY(100%);}
+  .achieve-toast.show{transform:translateY(0);}
+
+  /* Door — scale down on small screens */
+  .door-frame{width:240px;height:340px;}
+
+  /* Roadmap */
+  .roadmap-page{padding:72px 12px 48px;}
+  .rm-phase{grid-template-columns:56px 1px 1fr;gap:0 12px;}
+  .rm-phase::before{left:56px;}
+  .rm-dot{left:48px;top:22px;width:14px;height:14px;font-size:7px;}
+  .rm-timing{padding:18px 0;}
+  .rm-timing-val{font-size:7px;letter-spacing:.1em;}
+  .rm-phase-title{font-size:20px;}
+  .rm-phase-sub{font-size:13px;}
+  .rm-content{padding:14px 0 28px;}
+  .rm-item{padding:10px 12px;gap:8px;}
+  .ri-title{font-size:8.5px;letter-spacing:.1em;}
+  .ri-desc{font-size:12px;}
+  .rm-phase-badge{font-size:7px;padding:3px 8px;}
+
+  /* Nav token badge — hide label on very small */
+  .nav-token-badge{padding:5px 10px;font-size:10px;}
 }
 .about-strip{text-align:center;padding:64px 24px 48px;border-top:1px solid var(--bdr);margin-top:80px;}
 .about-text{font-size:15px;color:var(--muted);font-weight:300;line-height:1.9;max-width:500px;margin:0 auto 20px;font-style:italic;}
@@ -807,10 +1129,10 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
 
 <!-- Mobile Drawer -->
 <div class="nav-drawer" id="drawer">
-  <a href="#how" onclick="toggleMenu()">How it works</a>
-  <a href="#explore" onclick="toggleMenu()">Explore</a>
-  <a href="#regions" onclick="toggleMenu()">Regions</a>
-  <a class="btn-nav" href="#" onclick="toggleMenu();showPage('landing')">Start Generating</a>
+  <a href="#" onclick="toggleMenu();showPage('landing')">Home</a>
+  <a href="#" onclick="toggleMenu();showPage('explore')">Explore</a>
+  <a href="#" onclick="toggleMenu();showPage('roadmap')">Roadmap</a>
+  <a class="btn-nav" href="#" onclick="toggleMenu();showPage('explore')">Play Now</a>
 </div>
 
 <!-- ════════════ LANDING PAGE ════════════ -->
@@ -1048,7 +1370,7 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
   <section class="cta-sec">
     <h2 class="cta-h">The world's myths<br>are waiting to be <em>heard.</em></h2>
     <p class="cta-p">Start with any country. Generate your first story free — no account required.</p>
-    <a class="btn-cta" onclick="showStory()">Begin Your First Story →</a>
+    <a class="btn-cta" onclick="showPage('explore')">Explore Stories →</a>
   </section>
 
   <!-- ABOUT US -->
@@ -1677,14 +1999,12 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
 </div>
 <div class="page" id="page-story">
 
-  <!-- Full-bleed story hero -->
+  <!-- Story Hero -->
   <div class="story-hero">
     <div class="sh-bg"></div>
     <div class="sh-pattern"></div>
-    <div class="sh-orb sh-orb1"></div>
-    <div class="sh-orb sh-orb2"></div>
-    <div class="sh-orb sh-orb3"></div>
-    <div class="sh-art">🌊</div>
+    <div class="sh-orb sh-orb1"></div><div class="sh-orb sh-orb2"></div><div class="sh-orb sh-orb3"></div>
+    <div class="sh-art" id="storyHeroArt">🌊</div>
     <div class="sh-overlay"></div>
     <div class="sh-content">
       <div class="sh-meta">
@@ -1697,104 +2017,229 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
     </div>
   </div>
 
-  <!-- Audio Player -->
-  <div class="audio-bar">
-    <button class="ab-play" id="playBtn" onclick="togglePlay()">
-      <svg id="playIco" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
-    </button>
-    <div class="ab-info">
-      <div class="ab-title">The Daughter of the Sea — Narrated · Gamelan &amp; Ocean Ambience</div>
-      <div class="ab-track">
-        <div class="ab-bar" onclick="seekAudio(event)">
-          <div class="ab-prog" id="abProg"></div>
-        </div>
-        <span class="ab-time" id="abTime">1:42 / 4:55</span>
-      </div>
+  <!-- Reading progress -->
+  <div class="read-progress"><div class="read-progress-fill" id="readProgress" style="width:0%"></div></div>
+
+  <!-- Game HUD -->
+  <div class="story-game-hud">
+    <div class="sgh-item"><span class="sgh-icon">🪙</span><span class="sgh-val" id="sghTokens">150</span><span class="sgh-lbl">tokens</span></div>
+    <div class="sgh-item"><span class="sgh-icon">⚡</span><span class="sgh-val" id="sghXP">0</span><span class="sgh-lbl">xp</span></div>
+    <div class="sgh-item">
+      <span class="sgh-lbl" style="margin-right:4px;">lv</span>
+      <span class="sgh-val" id="sghLevel">1</span>
+      <div class="xp-bar-outer"><div class="xp-bar-inner" id="xpBar" style="width:0%"></div></div>
     </div>
-    <div class="ab-vol">
-      <svg viewBox="0 0 16 16"><path d="M3 5v6h4l5 4V1L7 5H3z"/></svg>
-      <div class="ab-vol-bar"><div class="ab-vol-fill"></div></div>
+    <div class="sgh-item"><span class="sgh-icon">🧩</span><span class="sgh-val" id="sghFrags">0</span><span class="sgh-lbl">/5 frags</span></div>
+    <div class="sgh-item"><span class="sgh-icon">🏅</span><span class="sgh-val" id="sghBadges">2</span><span class="sgh-lbl">badges</span></div>
+  </div>
+
+  <!-- Chapter tabs -->
+  <div class="chapter-nav" id="chapterNav">
+    <button class="chap-tab ct-active" data-ch="0" onclick="switchChapter(0)"><span class="chap-dot"></span>Part I</button>
+    <button class="chap-tab ct-locked" data-ch="1" onclick="switchChapter(1)"><span class="chap-dot"></span>Part II</button>
+    <button class="chap-tab ct-locked" data-ch="2" onclick="switchChapter(2)"><span class="chap-dot"></span>Part III</button>
+    <button class="chap-tab ct-locked" data-ch="3" onclick="switchChapter(3)"><span class="chap-dot"></span>Epilogue</button>
+  </div>
+
+  <!-- ═══ CHAPTER 0 ═══ -->
+  <div class="chap-body ch-active" id="chap-0">
+
+    <p class="story-chapter">Part I — The First Waters</p>
+    <p class="story-p drop-cap">Before the archipelago had a name, before the first bird called across the open water, there was only the ocean. And in the deepest fold of the ocean, below where light could reach and beyond where current could stir, a goddess slept.</p>
+    <p class="story-p">She had no mother and no father, for she had emerged from the first collision of salt and darkness at the beginning of time. Her hair was made of kelp and phosphorescent creatures that lit her way through the eternal night of the ocean floor.</p>
+    <p class="story-p">Her eyes were the colour of the water at the exact moment before a storm — that peculiar green that contains both danger and promise. She had never seen the sky.</p>
+
+    <div class="pull-quote">
+      <p class="pq-text">She did not know that above the surface, there existed a world of burning light — a world that, one day, she would help bring into being.</p>
+    </div>
+
+    <p class="story-p">For ten thousand years she slept in her palace of coral and obsidian, dreaming dreams that rippled outward through the ocean floor, causing distant tremors that sailors would one day attribute to angry spirits. Her dreams were the first stories — of colour, of warmth, of a sensation she had no name for but which we would call <em>longing</em>.</p>
+
+    <p class="story-p">It was the arrival of a single ray of light that woke her. A volcanic fissure opened in the ocean floor like an eye, and through it fell a beam of sunlight from the surface world above. It touched her face for the first time.</p>
+
+    <!-- ═══ CHAPTER 0 PUZZLE ═══ -->
+    <div class="puzzle-card" id="puzzle-0">
+      <div class="puzzle-header">
+        <span class="puzzle-icon">🔍</span>
+        <div>
+          <div class="puzzle-label">End of Chapter · Teka-teki</div>
+          <div class="puzzle-q">The goddess slept for ten thousand years. What was the <em>first sensation</em> that woke her — and what does this reveal about her nature?</div>
+        </div>
+      </div>
+      <div class="puzzle-stake">
+        <span class="stake-item stake-win">✦ Benar: +40 🪙 +80 XP + Fragment 🧩</span>
+        <span class="stake-item stake-lose">✦ Salah: −15 🪙</span>
+      </div>
+      <div class="puzzle-opts" id="opts-0">
+        <button class="puzzle-opt" onclick="answerPuzzle(0,'A')"><span class="opt-letter">A</span><span class="opt-text">The sound of a fisherman's prayer drifting down through the water — she was moved by human devotion</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(0,'B')"><span class="opt-letter">B</span><span class="opt-text">A beam of sunlight touching her face — she woke to <em>light</em>, the one thing she had never known</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(0,'C')"><span class="opt-letter">C</span><span class="opt-text">An earthquake shaking her palace — the physical world interrupted her dreaming</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(0,'D')"><span class="opt-letter">D</span><span class="opt-text">The longing in her own dreams grew so strong it woke her — desire is stronger than sleep</span></button>
+      </div>
+      <div class="puzzle-result" id="result-0"></div>
     </div>
   </div>
 
-  <!-- Story body -->
-  <div class="story-body">
-    <!-- Main text -->
-    <article class="story-text">
-      <div id="storyContent">
-      <p class="story-chapter">Part I — The First Waters</p>
+  <!-- ═══ CHAPTER 1 ═══ -->
+  <div class="chap-body" id="chap-1">
 
-      <p class="story-p drop-cap">Before the islands of the archipelago were given their names, before the fishermen learned the rhythms of the tide, the ocean was a single, unbroken thought. Deep beneath the surface where light could not reach, where the pressure of ten thousand fathoms compressed the water into something almost solid, there lived a goddess. Her name, in the language of the deep, was <em>Samudri Kanya</em> — the Daughter of the Sea.</p>
+    <p class="story-chapter">Part II — The Rising</p>
+    <p class="story-p drop-cap">The goddess woke as though from a dream she had been dreaming all her life. The light burned her eyes, which had never before encountered such a thing, and she wept. Her tears fell upward — for in the deep ocean, even tears must choose a direction, and hers chose to rise.</p>
+    <p class="story-p">Each tear that left her became something. The first tear, enormous and heavy, hit the ocean floor and erupted — a volcano, building itself layer by layer toward the surface. Then another. Then another.</p>
 
-      <p class="story-p">She had no mother and no father, for she had emerged from the first collision of salt and darkness at the beginning of time. Her hair was made of kelp and phosphorescent creatures that lit her way through the eternal night of the ocean floor. Her eyes were the colour of the water at the exact moment before a storm — that peculiar green that contains both danger and promise.</p>
+    <div class="story-illus">
+      <div class="si-box"><span class="si-em">🌋</span><div class="si-ov2"></div></div>
+      <p class="si-caption">Illustration · Batik ink style · AI Generated</p>
+    </div>
 
-      <div class="pull-quote">
-        <p class="pq-text">She had never seen the sky. She did not know that above the surface of the water, there existed a world of burning light and breathing creatures — a world that, one day, she would help bring into being.</p>
-      </div>
+    <p class="story-p">She wept for seven days and seven nights, and with each tear, a new island was born from the sea. The archipelago stretched out like a necklace of green jewels across the equatorial ocean. Birds arrived from distant continents, carried on winds. Trees grew from seeds that the waves deposited on the new shores.</p>
 
-      <p class="story-p">For ten thousand years she slept in her palace of coral and obsidian, dreaming dreams that rippled outward through the ocean floor, causing distant tremors that sailors would one day attribute to angry spirits. Her dreams were the first stories — of colour, of warmth, of a sensation she had no name for but which we would call <em>longing</em>.</p>
+    <div class="pull-quote">
+      <p class="pq-text">The people say that when you taste the sea, you taste the grief of the goddess — and also her joy, for she did not weep from sadness. She wept because beauty, once seen, is impossible to contain.</p>
+    </div>
 
-      <p class="story-p">It was the arrival of a single ray of light that woke her. A crack had formed in the ocean floor — a volcanic fissure that opened like an eye, and through it, impossibly, fell a beam of sunlight from the surface world above. It touched her face.</p>
+    <p class="story-p">Eventually, the first humans arrived — on rafts and boats, following stars and birds, guided by instincts older than language. They settled on the goddess's islands, planted their gardens above her coral palace, and cast their nets into the waters where she still lived below.</p>
 
-      <!-- Illustration break -->
-      <div class="story-illus">
-        <div class="si-box">
-          <span class="si-em">🌊</span>
-          <div class="si-ov2"></div>
-        </div>
-        <p class="si-caption">Illustration · Batik ink style · AI Generated</p>
-      </div>
-
-      <p class="story-chapter">Part II — The Rising</p>
-      </div>
-
-      <p class="story-p">The goddess woke as though from a dream she had been dreaming all her life. The light burned her eyes, which had never before encountered such a thing, and she wept. Her tears fell upward — for in the deep ocean, even tears must choose a direction, and hers chose to rise.</p>
-
-      <p class="story-p">Each tear that left her became something. The first tear, enormous and heavy, hit the ocean floor and erupted — a volcano, building itself layer by layer toward the surface. Then another. Then another. She wept for seven days and seven nights, and with each tear, a new island was born from the sea.</p>
-
-      <p class="story-p">The archipelago stretched out like a necklace of green jewels across the equatorial ocean. Birds arrived from distant continents, carried on winds. Trees grew from seeds that the waves deposited on the new shores. Rain clouds gathered above the mountains her tears had built, and rivers began to flow down to the sea, carrying the red earth back to her.</p>
-
-      <div class="pull-quote">
-        <p class="pq-text">The people say that when you taste the sea, you taste the grief of the goddess — and also her joy, for she did not weep from sadness. She wept because beauty, once seen, is impossible to contain.</p>
-      </div>
-
-      <p class="story-p">Eventually, the first humans arrived — on rafts and boats, following stars and birds, guided by instincts older than language. They settled on the goddess's islands, planted their gardens above her coral palace, and cast their nets into the waters where she still lived below, watching them with her storm-coloured eyes.</p>
-
-      <p class="story-p">They did not know she was there. But she knew them — every fisherman who whispered a prayer before the dawn departure, every child who stood at the water's edge and stared into the deep as if searching for something they had lost but could not name. She heard them all. And sometimes, when the moon was full and the water was calm, she would rise just enough to let one of them glimpse something beneath the surface — a shimmer, a shape, a face — before disappearing again into the world she had made from her own grief and her own wonder.</p>
-
-      <p class="story-p">This is why the people of the archipelago say: <em>the ocean is not empty</em>. It is the oldest home. And it remembers everything.</p>
-    </article>
-
-    <!-- Sidebar -->
-    <aside class="story-sidebar">
-      <!-- Story actions -->
-      <div class="ss-card ss-actions">
-        <div class="ss-title">This story</div>
-        <button class="btn-regen" onclick="showPage('landing')">← Generate New Story</button>
-        <div class="share-row">
-          <button class="btn-share">Save</button>
-          <button class="btn-share">Share</button>
-          <button class="btn-share">Download</button>
+    <!-- ═══ CHAPTER 1 PUZZLE — TRAP ═══ -->
+    <div class="puzzle-card" id="puzzle-1">
+      <div class="puzzle-header">
+        <span class="puzzle-icon">⚠️</span>
+        <div>
+          <div class="puzzle-label" style="color:var(--terra);">End of Chapter · Jebakan Tersembunyi</div>
+          <div class="puzzle-q">The goddess created islands from her tears. A fisherman offers you a gift — a <em>green stone</em> pulled from her coral palace. According to the story's logic, what should you do?</div>
         </div>
       </div>
-      <!-- Metadata -->
-      <div class="ss-card ss-meta-card">
-        <div class="ss-title">Story details</div>
-        <div class="ss-stat"><span class="ss-stat-l">Origin</span><span class="ss-stat-r">Indonesia 🇮🇩</span></div>
-        <div class="ss-stat"><span class="ss-stat-l">Type</span><span class="ss-stat-r">Origin Myth</span></div>
-        <div class="ss-stat"><span class="ss-stat-l">Read time</span><span class="ss-stat-r">~5 min</span></div>
-        <div class="ss-stat"><span class="ss-stat-l">Audio</span><span class="ss-stat-r">4:55</span></div>
-        <div class="ss-tags">
-          <span class="ss-tag">Nusantara</span><span class="ss-tag">Sea</span><span class="ss-tag">Creation</span>
-          <span class="ss-tag">Goddess</span><span class="ss-tag">Islands</span>
+      <div class="puzzle-stake">
+        <span class="stake-item stake-win">✦ Bijak: +50 🪙 +100 XP + Fragment 🧩</span>
+        <span class="stake-item stake-lose">✦ Terjebak: −25 🪙 + kutukan ☠️</span>
+      </div>
+      <div class="puzzle-opts" id="opts-1">
+        <button class="puzzle-opt" onclick="answerPuzzle(1,'A')"><span class="opt-letter">A</span><span class="opt-text">Accept it immediately — a gift from the sea is a blessing from the goddess herself</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(1,'B')"><span class="opt-letter">B</span><span class="opt-text">Ask which part of the palace it came from — the goddess's belongings carry her memory and must be returned</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(1,'C')"><span class="opt-letter">C</span><span class="opt-text">Take it and wear green to honour the goddess — she will see it as tribute</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(1,'D')"><span class="opt-letter">D</span><span class="opt-text">Refuse and cast it back into the sea — what comes from the deep belongs to the deep</span></button>
+      </div>
+      <div class="puzzle-result" id="result-1"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPTER 2 ═══ -->
+  <div class="chap-body" id="chap-2">
+
+    <p class="story-chapter">Part III — The Watching</p>
+    <p class="story-p drop-cap">They did not know she was there. But she knew them — every fisherman who whispered a prayer before the dawn departure, every child who stood at the water's edge and stared into the deep as if searching for something they had lost but could not name.</p>
+    <p class="story-p">She heard them all. And sometimes, when the moon was full and the water was calm, she would rise just enough to let one of them glimpse something beneath the surface — a shimmer, a shape, a face — before disappearing again.</p>
+    <p class="story-p">There was one man — a net-maker named Arjun — who saw her clearly. He did not scream, as others had. He simply sat at the water's edge and said, quietly, <em>"I see you."</em></p>
+
+    <div class="pull-quote">
+      <p class="pq-text">She had watched ten thousand humans. None had ever looked back. The net-maker's words fell into her like that first ray of sunlight — like something she had been waiting for without knowing she was waiting.</p>
+    </div>
+
+    <p class="story-p">Every night for forty nights, Arjun returned to the shore. He brought nothing — no offerings, no nets, no boat. He simply sat and watched the water the way the water had always watched him. On the fortieth night, the goddess rose to her waist above the surface and they spoke, though neither could later say in which language.</p>
+
+    <!-- ═══ CHAPTER 2 PUZZLE — TREASURE ═══ -->
+    <div class="puzzle-card" id="puzzle-2">
+      <div class="puzzle-header">
+        <span class="puzzle-icon">💎</span>
+        <div>
+          <div class="puzzle-label">End of Chapter · Harta Tersembunyi</div>
+          <div class="puzzle-q">Arjun returns every night with <em>nothing</em>. The goddess is moved by this. What does his empty-handedness symbolise in the context of this myth?</div>
         </div>
       </div>
-      <!-- Context card -->
-      <div class="ss-card">
-        <div class="ss-title">Cultural context</div>
-        <div class="ss-body">The archipelago's oral traditions are rich with sea goddess mythology, reflecting the central role of the ocean in daily life. Themes of creation-through-emotion appear across Javanese, Sundanese, and Balinese folk traditions.</div>
+      <div class="puzzle-stake">
+        <span class="stake-item stake-win">✦ Benar: +60 🪙 +120 XP + Badge 🏅 + Fragment 🧩</span>
+        <span class="stake-item stake-lose">✦ Salah: −20 🪙</span>
       </div>
-    </aside>
+      <div class="puzzle-opts" id="opts-2">
+        <button class="puzzle-opt" onclick="answerPuzzle(2,'A')"><span class="opt-letter">A</span><span class="opt-text">Poverty — he was a simple man who had nothing to offer the powerful</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(2,'B')"><span class="opt-letter">B</span><span class="opt-text">Respect without transaction — he sought presence, not power, asking nothing in return</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(2,'C')"><span class="opt-letter">C</span><span class="opt-text">Fear — he was afraid to bring anything in case the goddess was offended</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(2,'D')"><span class="opt-letter">D</span><span class="opt-text">Strategy — he knew that emptiness would intrigue her more than gifts</span></button>
+      </div>
+      <div class="puzzle-result" id="result-2"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CHAPTER 3 — EPILOGUE ═══ -->
+  <div class="chap-body" id="chap-3">
+
+    <p class="story-chapter">Epilogue — The Ocean Remembers</p>
+    <p class="story-p drop-cap">Arjun grew old. The goddess did not. This is the nature of things between the mortal world and the one below. But when he died — quietly, at the water's edge, as he had always lived — she gathered his last breath before it could disperse into the air.</p>
+    <p class="story-p">She kept it in a shell deep in her palace, where it still glows faintly. On certain nights, when the sea is perfectly still, fishermen report hearing something from the deep — not a voice exactly, but the impression of one. The feeling of being known.</p>
+
+    <div class="pull-quote">
+      <p class="pq-text">This is why the people of the archipelago say: <em>the ocean is not empty</em>. It is the oldest home. And it remembers everything.</p>
+    </div>
+
+    <p class="story-p">The net-maker's descendants still live on the shore. They are known as people who speak to the sea — and somehow, the sea speaks back. They say it is not magic. They say it is simply memory, and that memory, if kept long enough, begins to feel like love.</p>
+
+    <!-- ═══ CHAPTER 3 FINAL PUZZLE ═══ -->
+    <div class="puzzle-card" id="puzzle-3">
+      <div class="puzzle-header">
+        <span class="puzzle-icon">🌊</span>
+        <div>
+          <div class="puzzle-label" style="color:var(--gold2);">Pertanyaan Terakhir · Harta Agung</div>
+          <div class="puzzle-q">The goddess keeps Arjun's last breath in a glowing shell. In the logic of oral tradition, what is this shell most likely to represent for future generations?</div>
+        </div>
+      </div>
+      <div class="puzzle-stake">
+        <span class="stake-item stake-win">✦ Master: +100 🪙 +200 XP + Badge Langka 👑 + Fragment 🧩</span>
+        <span class="stake-item stake-lose">✦ Salah: −30 🪙</span>
+      </div>
+      <div class="puzzle-opts" id="opts-3">
+        <button class="puzzle-opt" onclick="answerPuzzle(3,'A')"><span class="opt-letter">A</span><span class="opt-text">A warning — the sea claims what it loves, and mortals should keep their distance</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(3,'B')"><span class="opt-letter">B</span><span class="opt-text">Proof of the goddess's existence — something tangible the descendants can show as evidence</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(3,'C')"><span class="opt-letter">C</span><span class="opt-text">The origin of the lineage's gift — the reason his descendants can communicate with the sea</span></button>
+        <button class="puzzle-opt" onclick="answerPuzzle(3,'D')"><span class="opt-letter">D</span><span class="opt-text">A treasure to be sought — the shell is hidden somewhere and finding it grants immortality</span></button>
+      </div>
+      <div class="puzzle-result" id="result-3"></div>
+    </div>
+
+    <!-- Story end screen -->
+    <div class="story-end" id="storyEnd">
+      <span class="se-icon">🌊</span>
+      <h2 class="se-title">Cerita Selesai</h2>
+      <p class="se-sub">You have journeyed through The Daughter of the Sea</p>
+      <div class="se-rewards" id="seRewards"></div>
+      <div class="se-stat" style="margin:0 auto 28px;display:inline-block;">
+        <div class="se-stat-val" id="seFinalScore">0</div>
+        <div class="se-stat-lbl">Total Score</div>
+      </div>
+
+      <!-- Fragment collection status -->
+      <div id="fragmentStatus"></div>
+
+      <div class="se-actions">
+        <button class="btn-confirm" onclick="showPage('explore')">← Explore More Stories</button>
+        <button class="btn-secondary" onclick="showPage('roadmap')">View Roadmap ✦</button>
+      </div>
+    </div>
+
+  </div><!-- /chap-3 -->
+
+  <!-- Sidebar (desktop) -->
+  <div style="max-width:720px;margin:0 auto 0;padding:0 20px 60px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;" id="storyMetaCards">
+      <div style="background:var(--surf);border:1px solid var(--bdr);padding:16px;">
+        <div class="ss-title">Story Details</div>
+        <div class="ss-stat"><span class="ss-stat-l">Origin</span><span class="ss-stat-r" id="metaOrigin">Indonesia 🇮🇩</span></div>
+        <div class="ss-stat"><span class="ss-stat-l">Type</span><span class="ss-stat-r" id="metaType">Origin Myth</span></div>
+        <div class="ss-stat"><span class="ss-stat-l">Chapters</span><span class="ss-stat-r">4</span></div>
+        <div class="ss-stat"><span class="ss-stat-l">Puzzles</span><span class="ss-stat-r">4 · 2 Traps</span></div>
+      </div>
+      <div style="background:var(--surf);border:1px solid var(--bdr);padding:16px;">
+        <div class="ss-title">Your Fragments</div>
+        <div class="ss-fragments" id="fragmentDisplay">
+          <div class="frag-chip not-collected" id="frag-0">🧩</div>
+          <div class="frag-chip not-collected" id="frag-1">🧩</div>
+          <div class="frag-chip not-collected" id="frag-2">🧩</div>
+          <div class="frag-chip not-collected" id="frag-3">🧩</div>
+          <div class="frag-chip not-collected" id="frag-4">🔮</div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;font-family:'DM Mono',monospace;letter-spacing:.08em;">Collect all 5 to unlock a rare story</p>
+      </div>
+    </div>
+    <button class="btn-regen" style="max-width:100%;display:block;margin-top:10px;" onclick="showPage('explore')">← Back to Explore</button>
   </div>
 
   <!-- Related stories -->
@@ -1803,20 +2248,20 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
       <p class="sec-lbl">More stories</p>
       <h2 class="sec-h">You might also <em>love.</em></h2>
       <div class="rel-grid">
-        <div class="ec" onclick="scrollToTop()">
+        <div class="ec" onclick="showPage('explore')">
           <div class="ei i2"><span class="iem">🦊</span><div class="iov"></div></div>
           <div class="eb"><div class="em"><span class="ec-country">Japan</span><span class="ec-dot"></span><span class="ec-type">Spirit Tale</span></div><h3 class="et">The Fox of a Thousand Winters</h3><p class="ee">A nine-tailed kitsune who had forgotten loneliness — until a blind poet wandered off the mountain road…</p></div>
-          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span></div><span class="earr">→</span></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Puzzle</span></div><span class="earr">→</span></div>
         </div>
-        <div class="ec" onclick="scrollToTop()">
-          <div class="ei i4"><span class="iem">🌿</span><div class="iov"></div></div>
-          <div class="eb"><div class="em"><span class="ec-country">Philippines</span><span class="ec-dot"></span><span class="ec-type">Origin Myth</span></div><h3 class="et">How Bathala Made the World</h3><p class="ee">Before sky and earth were separated, a great god hovered between them, deciding what to keep and what to let fall…</p></div>
-          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        <div class="ec" onclick="showPage('explore')">
+          <div class="ei i4"><span class="iem">🕷️</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Nigeria</span><span class="ec-dot"></span><span class="ec-type">Trickster</span></div><h3 class="et">Anansi Steals the Sun's Name</h3><p class="ee">Eight legs, one silver tongue, and a wager against the sky god that nobody thought he could win…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Trap</span></div><span class="earr">→</span></div>
         </div>
-        <div class="ec" onclick="scrollToTop()">
-          <div class="ei i6"><span class="iem">🐉</span><div class="iov"></div></div>
-          <div class="eb"><div class="em"><span class="ec-country">Vietnam</span><span class="ec-dot"></span><span class="ec-type">Creation Story</span></div><h3 class="et">Lạc Long Quân & Âu Cơ</h3><p class="ee">A dragon lord and a mountain fairy fell in love across the boundary of two worlds — and their children became the Vietnamese people…</p></div>
-          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Art</span><span class="pill on">Audio</span></div><span class="earr">→</span></div>
+        <div class="ec" onclick="showPage('explore')">
+          <div class="ei i6"><span class="iem">🐺</span><div class="iov"></div></div>
+          <div class="eb"><div class="em"><span class="ec-country">Norway</span><span class="ec-dot"></span><span class="ec-type">Epic Saga</span></div><h3 class="et">Fenrir Breaks His Chain</h3><p class="ee">The gods feared the wolf-child so they bound him — but Ragnarok approaches and chains do not hold gods…</p></div>
+          <div class="ef"><div class="pills"><span class="pill on">Story</span><span class="pill on">Puzzle</span></div><span class="earr">→</span></div>
         </div>
       </div>
     </div>
@@ -1824,11 +2269,13 @@ footer{border-top:1px solid var(--bdr);padding:32px 28px;display:flex;align-item
 
   <footer>
     <a class="fl" href="#">Autentico</a>
-    <p class="fc2">© 2025 Autentico · AI-generated stories</p>
-    <ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Cultures</a></li><li><a href="#">Privacy</a></li></ul>
+    <p class="fc2">© 2026 Autentico · AI Folklore</p>
+    <ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Explore</a></li><li><a href="#">Roadmap</a></li></ul>
   </footer>
 
 </div><!-- /page-story -->
+
+  
 
 <script>
 // ── CURSOR (desktop only) ──────────────────────
@@ -2167,6 +2614,178 @@ document.querySelectorAll('.how-card,.ec,.rc,.fc').forEach(el=>{
   el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .5s ease, transform .5s ease';
   obs.observe(el);
 });
+
+// ════════════════════════════════════════
+// TREASURE & TRAP PUZZLE SYSTEM
+// ════════════════════════════════════════
+const PUZZLES=[
+  {correct:'B',type:'treasure',rewardTokens:40,rewardXP:80,hasFragment:true,hasBadge:false,trapTokens:15,
+   winTitle:'💰 Harta Ditemukan!',loseTitle:'💸 Salah Jalan',
+   winBody:'Tepat. Sinar matahari adalah momen pemicu — simbol pertemuan pertamanya dengan dunia di luar dirinya. Mitos ini berputar pada kekuatan transformatif dari hal yang belum pernah dikenal.',
+   loseBody:'Baca ulang: "It was the arrival of a single ray of light that woke her." Teks sangat jelas — dan secara metaforis, cahaya mewakili pengetahuan yang belum ia miliki.',
+   winRewards:['🪙 +40 Tokens','⚡ +80 XP','🧩 Fragment I'],loseRewards:['💸 −15 Tokens']},
+  {correct:'D',type:'trap',rewardTokens:50,rewardXP:100,hasFragment:true,hasBadge:false,trapTokens:25,
+   winTitle:'🛡️ Jebakan Dihindari!',loseTitle:'☠️ Terjebak!',
+   winBody:'Benar. Dalam logika mitos ini, laut adalah wilayah sang dewi. Apapun yang diambil dari istananya membawa kutukan. Yang datang dari kedalaman harus dikembalikan ke kedalaman.',
+   loseBody:'Batu hijau itu adalah jebakan. Pilihan A dan C adalah godaan klasik folklore — untuk yang tamak atau tidak berhati-hati. Laut memberi dan laut mengambil.',
+   winRewards:['🪙 +50 Tokens','⚡ +100 XP','🧩 Fragment II'],loseRewards:['💸 −25 Tokens','☠️ Kutukan aktif']},
+  {correct:'B',type:'treasure',rewardTokens:60,rewardXP:120,hasFragment:true,hasBadge:true,trapTokens:20,
+   winTitle:'💎 Harta Agung!',loseTitle:'Kurang Dalam',
+   winBody:'Sempurna. Tangan kosong Arjun mewakili rasa hormat tanpa transaksi — jenis yang paling langka. Ia ingin kehadirannya, bukan kekuatannya. Inilah poros moral mitos ini: perbedaan antara nelayan yang berdoa untuk ikan, dan yang sekadar melihat laut.',
+   loseBody:'Cerita ini kontras antara Arjun dan "nelayan yang berbisik doa sebelum fajar" — mereka yang datang karena ingin sesuatu. Arjun tidak menginginkan apa-apa, itulah kenapa sang dewi tergerak.',
+   winRewards:['🪙 +60 Tokens','⚡ +120 XP','🏅 Badge: Sea Whisperer','🧩 Fragment III'],loseRewards:['💸 −20 Tokens'],
+   badgeName:'Sea Whisperer',badgeIcon:'🌊'},
+  {correct:'C',type:'treasure',rewardTokens:100,rewardXP:200,hasFragment:true,hasBadge:true,trapTokens:30,
+   winTitle:'👑 Master of the Myth!',loseTitle:'So Close',
+   winBody:'Luar biasa. Kerang bercahaya adalah titik asal kemampuan keturunan Arjun untuk berbicara dengan laut. Ini adalah struktur tradisi lisan klasik: pengalaman luar biasa leluhur menjadi kemampuan yang diwariskan. Mitos ini menjelaskan mengapa keluarga tertentu memiliki kemampuan yang tidak dimiliki orang lain.',
+   loseBody:'Kerang bukan peringatan, bukan bukti untuk skeptis, bukan item pencarian. Dalam tradisi lisan, fungsi benda semacam itu selalu menjelaskan kenyataan masa kini — dalam hal ini, mengapa keturunan pembuat jala memiliki hubungan luar biasa dengan laut.',
+   winRewards:['🪙 +100 Tokens','⚡ +200 XP','👑 Badge: Myth Master','🧩 Fragment IV+V'],loseRewards:['💸 −30 Tokens'],
+   badgeName:'Myth Master',badgeIcon:'👑'},
+];
+
+let chapterState={unlocked:[true,false,false,false],answered:[false,false,false,false],correct:[false,false,false,false],fragmentsCollected:0,storyScore:0};
+
+function calcLevel(xp){
+  if(xp<100)return{level:1,pct:xp};
+  if(xp<250)return{level:2,pct:(xp-100)/1.5};
+  if(xp<500)return{level:3,pct:(xp-250)/2.5};
+  if(xp<1000)return{level:4,pct:(xp-500)/5};
+  return{level:5,pct:100};
+}
+function gid(x){return document.getElementById(x);}
+
+function updateStoryHUD(){
+  const xp=gameState.xp||0;
+  const lv=calcLevel(xp);
+  ['sghTokens'].forEach(x=>{const e=gid(x);if(e)e.textContent=gameState.tokens;});
+  if(gid('sghXP'))gid('sghXP').textContent=xp;
+  if(gid('sghLevel'))gid('sghLevel').textContent=lv.level;
+  if(gid('xpBar'))gid('xpBar').style.width=Math.min(lv.pct,100)+'%';
+  if(gid('sghFrags'))gid('sghFrags').textContent=chapterState.fragmentsCollected;
+  if(gid('sghBadges'))gid('sghBadges').textContent=gameState.badgeCount||2;
+  syncHUD();
+}
+
+function switchChapter(idx){
+  if(!chapterState.unlocked[idx])return;
+  document.querySelectorAll('.chap-tab').forEach((t,i)=>t.classList.toggle('ct-active',i===idx));
+  document.querySelectorAll('.chap-body').forEach((b,i)=>b.classList.toggle('ch-active',i===idx));
+  const pct=(idx/3)*100;
+  const bar=gid('readProgress');if(bar)bar.style.width=pct+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function answerPuzzle(puzzleIdx,chosen){
+  if(chapterState.answered[puzzleIdx])return;
+  chapterState.answered[puzzleIdx]=true;
+  const p=PUZZLES[puzzleIdx];
+  const ok=chosen===p.correct;
+  chapterState.correct[puzzleIdx]=ok;
+
+  // disable opts + highlight
+  const opts=gid('opts-'+puzzleIdx);
+  opts.querySelectorAll('.puzzle-opt').forEach(btn=>{
+    btn.disabled=true;
+    const l=btn.querySelector('.opt-letter').textContent;
+    if(l===p.correct)btn.classList.add('opt-correct');
+    else if(l===chosen&&!ok)btn.classList.add('opt-wrong');
+  });
+
+  // apply reward/penalty
+  if(ok){
+    gameState.tokens+=p.rewardTokens;
+    gameState.xp=(gameState.xp||0)+p.rewardXP;
+    chapterState.storyScore+=p.rewardTokens+p.rewardXP;
+    if(p.hasFragment){
+      if(puzzleIdx===3){
+        // last puzzle gives 2 fragments
+        [3,4].forEach(fi=>{const f=gid('frag-'+fi);if(f){f.classList.remove('not-collected');f.classList.add('collected');}});
+        chapterState.fragmentsCollected+=2;
+      } else {
+        const f=gid('frag-'+puzzleIdx);if(f){f.classList.remove('not-collected');f.classList.add('collected');}
+        chapterState.fragmentsCollected++;
+      }
+    }
+    if(p.hasBadge&&p.badgeName){
+      gameState.badgeCount=(gameState.badgeCount||2)+1;
+      setTimeout(()=>showToast(p.badgeIcon,'Badge Unlocked!',p.badgeName),800);
+    }
+  } else {
+    gameState.tokens=Math.max(0,gameState.tokens-p.trapTokens);
+  }
+  updateStoryHUD();
+
+  // render result
+  const result=gid('result-'+puzzleIdx);
+  result.className='puzzle-result pr-show '+(ok?'pr-treasure':'pr-trap');
+  const chips=(ok?p.winRewards:p.loseRewards).map(r=>{
+    const cls=r.includes('−')||r.includes('☠')?'chip-trap':r.includes('XP')?'chip-xp':r.includes('Badge')?'chip-badge':r.includes('Frag')?'chip-fragment':'chip-token';
+    return`<span class="pr-reward-chip ${cls}">${r}</span>`;
+  }).join('');
+  const isLast=puzzleIdx===3;
+  const nextLabel=['Part II','Part III','Epilogue','Selesai'][puzzleIdx];
+  result.innerHTML=`
+    <div class="pr-head"><span class="pr-icon">${ok?(p.type==='trap'?'🛡️':'💎'):'💸'}</span><span class="pr-title">${ok?p.winTitle:p.loseTitle}</span></div>
+    <p class="pr-body">${ok?p.winBody:p.loseBody}</p>
+    <div class="pr-rewards">${chips}</div>
+    ${!isLast
+      ?`<button class="btn-next-chapter" onclick="unlockNextChapter(${puzzleIdx})">Lanjut ke ${nextLabel} →</button>`
+      :`<button class="btn-next-chapter" onclick="finishStory()">Lihat Hasil Akhir 🌊</button>`}`;
+
+  setTimeout(()=>showToast(ok?(p.type==='trap'?'🛡️':'💰'):'💸',ok?'Benar!':'Terjebak!',ok?`+${p.rewardTokens} 🪙 +${p.rewardXP} XP`:`−${p.trapTokens} 🪙`),300);
+}
+
+function unlockNextChapter(currentIdx){
+  const next=currentIdx+1;if(next>3)return;
+  chapterState.unlocked[next]=true;
+  const tabs=document.querySelectorAll('.chap-tab');
+  if(tabs[next]){tabs[next].classList.remove('ct-locked');tabs[next].classList.add(next===1?'ct-trap':'ct-treasure');}
+  if(tabs[currentIdx]){tabs[currentIdx].classList.remove('ct-active');tabs[currentIdx].classList.add('ct-done');}
+  switchChapter(next);
+}
+
+function finishStory(){
+  const correctCount=chapterState.correct.filter(Boolean).length;
+  const totalFrags=chapterState.fragmentsCollected;
+  const endEl=gid('storyEnd');if(!endEl)return;
+  endEl.classList.add('se-show');
+  if(gid('seFinalScore'))gid('seFinalScore').textContent=chapterState.storyScore;
+  const re=gid('seRewards');
+  if(re){
+    re.innerHTML=[
+      `<div class="se-stat"><div class="se-stat-val">${correctCount}/4</div><div class="se-stat-lbl">Benar</div></div>`,
+      `<div class="se-stat"><div class="se-stat-val">${totalFrags}</div><div class="se-stat-lbl">Fragments</div></div>`,
+      `<div class="se-stat"><div class="se-stat-val">${gameState.tokens}</div><div class="se-stat-lbl">Tokens</div></div>`,
+    ].join('');
+  }
+  const fragEl=gid('fragmentStatus');
+  if(fragEl){
+    fragEl.innerHTML=totalFrags>=4
+      ?`<div class="fragments-complete"><span class="fc-icon">🔮</span><div class="fc-title">Semua Fragment Terkumpul!</div><div class="fc-body">Kamu membuka akses ke cerita langka: <em>The Net-Maker's Daughter</em>.</div><button class="btn-confirm" onclick="showToast('🔮','Rare Story!','The Net-Maker\\'s Daughter — Unlocked')">Unlock Cerita Langka 🔮</button></div>`
+      :`<p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:24px;">${totalFrags}/5 fragments · ${5-totalFrags} lagi untuk cerita langka</p>`;
+  }
+  document.querySelectorAll('.chap-tab').forEach(t=>{t.classList.remove('ct-active');t.classList.add('ct-done');});
+  if(gid('readProgress'))gid('readProgress').style.width='100%';
+  endEl.scrollIntoView({behavior:'smooth',block:'start'});
+  showToast('🌊','Cerita Selesai!','Score: '+chapterState.storyScore);
+}
+
+function initStory(){
+  chapterState={unlocked:[true,false,false,false],answered:[false,false,false,false],correct:[false,false,false,false],fragmentsCollected:0,storyScore:0};
+  document.querySelectorAll('.chap-tab').forEach((t,i)=>{t.className='chap-tab '+(i===0?'ct-active':'ct-locked');});
+  document.querySelectorAll('.chap-body').forEach((b,i)=>b.classList.toggle('ch-active',i===0));
+  for(let i=0;i<4;i++){
+    const r=gid('result-'+i);if(r){r.className='puzzle-result';r.innerHTML='';}
+    const o=gid('opts-'+i);if(o)o.querySelectorAll('.puzzle-opt').forEach(b=>{b.disabled=false;b.className='puzzle-opt';});
+  }
+  for(let i=0;i<5;i++){const f=gid('frag-'+i);if(f)f.className='frag-chip not-collected';}
+  const se=gid('storyEnd');if(se)se.classList.remove('se-show');
+  if(gid('readProgress'))gid('readProgress').style.width='0%';
+  updateStoryHUD();
+}
+
+const _origShowPage=showPage;
+function showPage(pageId){_origShowPage(pageId);if(pageId==='story')setTimeout(initStory,50);}
 </script>
 </body>
 </html>
